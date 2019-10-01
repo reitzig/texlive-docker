@@ -1,8 +1,29 @@
 # texlive-docker
 
+Yet another attempt at coming up with a working _and_ useful
+Docker image for 
+    [TeXlive](https://www.tug.org/texlive/).
+
+The basic concept is to provide a small-ish base image which
+installs additional packages from CTAN if and when needed.
+
+This image attempts to cover the following use cases:
+
+ - Replace local TeXlive installation.
+ - CI/CD pipelines.
+ <!-- - LaTeX build server. -->
+ <!-- - Document generation server. -->
+
 ## Usage
 
-    OUTPUT=foo.pdf
+See `example/one-off-build.sh` for an example.
+Note that `Texlivefile` contains a list of required CTAN packages. 
+
+<!-- TODO: document properly -->
+
+<!-- 
+ENV TEXLIVEFILE="Texlivefile"
+ENV OUTPUT="*.pdf *.log"
 
  Use:
   - bind-mount /work/src, /work/out; docker run ... --work '...'
@@ -10,12 +31,19 @@
   - either for src; docker run ... --work '...'; docker cp $container:/work/out/* ./
 
  Rebuild: docker start -a $name
+ -->
+
+### Debugging
+
+All output of the command you ran is collected in a single folder; extract it with:
+
+    docker cp $container:/work/tmp ./
 
 
 ## Customization
 
- - CI/CD --> ENTRYPOINT + CMD
- - Server?
+<!-- Custom profile -> docker build --build-arg "profile=foo" -->
+<!-- FROM + RUN tlmgr install -->
 
- ENV TEXLIVEFILE="Texlivefile"
-ENV OUTPUT="*.pdf *.log"s
+<!-- TODO: CI/CD -> ENTRYPOINT + CMD -->
+<!-- TODO: Server? -->

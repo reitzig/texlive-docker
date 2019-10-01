@@ -16,6 +16,7 @@ case "${command}" in
 
         # Install dependencies
         if [[ -f "${SRC_DIR}/${TEXLIVEFILE}" ]]; then
+            # TODO: Do only if hash changed
             xargs tlmgr install < "${SRC_DIR}/${TEXLIVEFILE}"
         else
             echo "Texlivefile not found; continuing without installing additional packages."
@@ -24,7 +25,7 @@ case "${command}" in
         # Execute command on (per se uncleaned) copy
         cp -rf "${SRC_DIR}"/* "${TMP_DIR}"/
         cd "${TMP_DIR}"
-        bash -c "${work_command}"
+        bash -c "${work_command}" || true q
 
         # Copy output to final destination
         cp ${OUTPUT} "${OUT_DIR}"/
