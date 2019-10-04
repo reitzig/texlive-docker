@@ -20,6 +20,8 @@ See `example/one-off-build.sh` for an example.
 Note that `Texlivefile` contains a list of required CTAN packages. 
 
 <!-- TODO: document properly -->
+<!-- TODO: build in Actions and deploy to registry; adapt doc -->
+<!-- TODO: check out https://github.com/dopefishh/itex and  https://ctan.org/pkg/texliveonfly -->
 
 <!-- 
 ENV TEXLIVEFILE="Texlivefile"

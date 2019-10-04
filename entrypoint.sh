@@ -13,14 +13,21 @@ case "${command}" in
         ;;
     "work" ) # Just because 'run' and 'exec' are Docker keywords
         work_command=${2:-echo 'Empty work command'}
+        # TODO: Alternative: read command from special file
 
         # Install dependencies
         if [[ -f "${SRC_DIR}/${TEXLIVEFILE}" ]]; then
-            # TODO: Do only if hash changed
-            xargs tlmgr install < "${SRC_DIR}/${TEXLIVEFILE}"
+            if ! sha256sum -c .tlcrane > /dev/null 2>&1; then
+                echo "Installing dependencies ..."
+                xargs tlmgr install < "${SRC_DIR}/${TEXLIVEFILE}"
+                sha256sum "${SRC_DIR}/${TEXLIVEFILE}" > .tlcrane
+            else
+                echo "Texlivefile has not changed; nothing new to install."
+            fi
         else
             echo "Texlivefile not found; continuing without installing additional packages."
         fi
+        echo ""
 
         # Execute command on (per se uncleaned) copy
         cp -rf "${SRC_DIR}"/* "${TMP_DIR}"/
