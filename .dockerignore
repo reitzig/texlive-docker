@@ -1,3 +1,5 @@
+/.github/
 /example/
-*.md
 /LICENSE
+.editorconfig
+*.md

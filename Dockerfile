@@ -49,5 +49,8 @@ WORKDIR /work
 ENV TEXLIVEFILE="Texlivefile"
 ENV OUTPUT="*.pdf *.log"
 
+# TODO: add meaningful labels
+#   --> http://label-schema.org/
+
 ENTRYPOINT [ "/bin/entrypoint" ]
 CMD [ "help" ]

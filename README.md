@@ -16,7 +16,7 @@ This image attempts to cover the following use cases:
 
 ## Usage
 
-See `example/one-off-build.sh` for an example.
+See the scripts in `example` for different ways to use the images.
 Note that `Texlivefile` contains a list of required CTAN packages. 
 
 <!-- TODO: document properly -->
@@ -34,6 +34,8 @@ ENV OUTPUT="*.pdf *.log"
 
  Rebuild: docker start -a $name
  -->
+
+<!-- TODO: Write a small script/program tl-crane to wrap these? -->
 
 ### Debugging
 

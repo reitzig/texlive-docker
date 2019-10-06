@@ -8,6 +8,10 @@ case "${command}" in
     "" | "help" )
         echo "Help!" # TODO: useful output
         ;;
+    "hold" )
+        echo "Blocking to keep container alive"
+        tail -f /dev/null
+        ;;
     "clean" )
         rm -rf "${TMP_DIR:?}"/*
         ;;
