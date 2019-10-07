@@ -20,11 +20,12 @@ case "${command}" in
         # TODO: Alternative: read command from special file
 
         # Install dependencies
+        hashfile="${TMP_DIR}/${TEXLIVEFILE}.sha"
         if [[ -f "${SRC_DIR}/${TEXLIVEFILE}" ]]; then
-            if ! sha256sum -c .tlcrane > /dev/null 2>&1; then
+            if ! sha256sum -c "${hashfile}" > /dev/null 2>&1; then
                 echo "Installing dependencies ..."
                 xargs tlmgr install < "${SRC_DIR}/${TEXLIVEFILE}"
-                sha256sum "${SRC_DIR}/${TEXLIVEFILE}" > .tlcrane
+                sha256sum "${SRC_DIR}/${TEXLIVEFILE}" > "${hashfile}"
             else
                 echo "Texlivefile has not changed; nothing new to install."
             fi
@@ -43,6 +44,6 @@ case "${command}" in
         ;;
     *)
         echo "Unknown command '${command}'"
-        exit 1 
+        exit 1
         ;;
 esac
