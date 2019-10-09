@@ -8,3 +8,6 @@
     - set new version number
     - Main version: from installer archive
     - Minor version: month? count?
+    - tag Git revision>
+
+ - Tag push: build new versions, tag accordingly + latest and push

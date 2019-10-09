@@ -2,7 +2,7 @@ FROM texlive-base-luatex
 
 COPY hello_world.tex "${SRC_DIR}/"
 
-RUN tlmgr install amsmath
+RUN tlmgr install amsmath qrcode
 # --> faster run!
 
 ENTRYPOINT entrypoint work 'lualatex hello_world.tex' > /dev/null && cat "${OUT_DIR}/hello_world.pdf"

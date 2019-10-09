@@ -37,6 +37,7 @@ case "${command}" in
         # Execute command on (per se uncleaned) copy
         cp -rf "${SRC_DIR}"/* "${TMP_DIR}"/
         cd "${TMP_DIR}"
+        rm -f ${OUTPUT}
         bash -c "${work_command}" || true q
 
         # Copy output to final destination
