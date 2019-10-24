@@ -30,7 +30,9 @@ RUN mkdir -p /usr/local/texlive/2019/bin \
  && ln -s /usr/local/texlive/2019/bin/x86_64-linuxmusl/mktexlsr  /usr/local/bin/mktexlsr
 
 RUN (cd install-tl; ./install-tl -profile texlive.profile) \
- && rm -rf install-tl
+ && rm -rf install-tl \
+ && tlmgr version | tail -n 1 > version \
+ && echo "Installed on $(date)" >> version
 
 ARG src_dir="/work/src"
 ARG tmp_dir="/work/tmp"

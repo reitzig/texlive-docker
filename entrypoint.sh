@@ -8,6 +8,9 @@ case "${command}" in
     "" | "help" )
         echo "Help!" # TODO: useful output
         ;;
+    "version" )
+        cat /version
+        ;;
     "hold" )
         echo "Blocking to keep container alive"
         tail -f /dev/null
