@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -eu
 
@@ -16,8 +16,23 @@ case "${command}" in
         rm -rf "${TMP_DIR:?}"/*
         ;;
     "work" ) # Just because 'run' and 'exec' are Docker keywords
-        work_command=${2:-echo 'Empty work command'}
-        # TODO: Alternative: read command from special file
+        case "${2:-}" in
+            "" )
+                if [[ -f "${SRC_DIR}/${BUILDSCRIPT}" ]]; then
+                    work_command="${SRC_DIR}/${BUILDSCRIPT}"
+                else
+                    echo 'Neither work command or build script given.'
+                    exit 1
+                fi
+                ;;
+            *)
+                work_command="${2}"
+
+                if [[ -f "${SRC_DIR}/${BUILDSCRIPT}" ]]; then
+                    echo "Work command overrides build script ${BUILDSCRIPT}."
+                fi
+            ;;
+        esac
 
         # Install dependencies
         hashfile="${TMP_DIR}/${TEXLIVEFILE}.sha"
@@ -27,10 +42,10 @@ case "${command}" in
                 xargs tlmgr install < "${SRC_DIR}/${TEXLIVEFILE}"
                 sha256sum "${SRC_DIR}/${TEXLIVEFILE}" > "${hashfile}"
             else
-                echo "Texlivefile has not changed; nothing new to install."
+                echo "${TEXLIVEFILE} has not changed; nothing new to install."
             fi
         else
-            echo "Texlivefile not found; continuing without installing additional packages."
+            echo "${TEXLIVEFILE} not found; continuing without installing additional packages."
         fi
         echo ""
 

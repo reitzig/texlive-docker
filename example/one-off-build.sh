@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This is the most ad-hoc approach: a single command will build
 # a LaTeX document in the current folder, once, and remove the
 # container again.
 
-# build image with: 
+# build image with:
 #   docker build -t texlive-base-luatex --build-arg "profile=base-luatex" .
 
 mkdir -p out

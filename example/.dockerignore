@@ -1,2 +1,4 @@
-/*.{log,pdf.sh}
+/*.log
+/*.pdf
+/*.sh
 /.gitignore

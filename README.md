@@ -48,7 +48,9 @@ You can adjust some defaults of the
     [main container script](https://github.com/reitzig/texlive-docker/blob/master/entrypoint.sh)
 by 
     [setting environment variables](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file):
-
+ 
+ - `BUILDSCRIPT` (default: `build.sh`)  
+   If present, the given script will be executed unless a work command is specified.
  - `TEXLIVEFILE` (default: `Texlivefile`)  
    The file to read dependencies from.
  - `OUTPUT` (default: `*.pdf *.log`)  

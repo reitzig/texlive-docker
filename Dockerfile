@@ -15,7 +15,7 @@ RUN apk --no-cache add \
     wget \
     xz \
     zlib
-    
+
 RUN wget mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz \
  && tar -xzf install-tl-unx.tar.gz \
  && rm install-tl-unx.tar.gz \
@@ -46,6 +46,7 @@ COPY entrypoint.sh /bin/entrypoint
 # USER ?
 WORKDIR /work
 
+ENV BUILDSCRIPT="build.sh"
 ENV TEXLIVEFILE="Texlivefile"
 ENV OUTPUT="*.pdf *.log"
 

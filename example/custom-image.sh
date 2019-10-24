@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This approach is good for builds with complicated setup:
 # create a new image that runs whatever you want.
