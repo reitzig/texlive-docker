@@ -39,6 +39,7 @@ case "${command}" in
         if [[ -f "${SRC_DIR}/${TEXLIVEFILE}" ]]; then
             if ! sha256sum -c "${hashfile}" > /dev/null 2>&1; then
                 echo "Installing dependencies ..."
+                tlmgr update --self
                 xargs tlmgr install < "${SRC_DIR}/${TEXLIVEFILE}"
                 sha256sum "${SRC_DIR}/${TEXLIVEFILE}" > "${hashfile}"
             else
