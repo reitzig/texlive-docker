@@ -2,3 +2,4 @@
 /*.pdf
 /*.sh
 /.gitignore
+/Dockerfile*

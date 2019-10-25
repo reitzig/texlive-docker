@@ -41,7 +41,8 @@ ENV SRC_DIR="${src_dir}"
 ENV TMP_DIR="${tmp_dir}"
 ENV OUT_DIR="${out_dir}"
 
-VOLUME [ "${src_dir}", "${tmp_dir}", "${out_dir}" ]
+# Instead of VOLUME, which breaks multi-stage builds:
+RUN mkdir -p "${src_dir}" "${tmp_dir}" "${out_dir}"
 
 COPY entrypoint.sh /bin/entrypoint
 # Add "aliases" to align `docker run` and `docker exec` usage.

@@ -4,6 +4,9 @@ set -eu
 
 command="${1:-}"
 
+# Make sure the main folders exist
+mkdir -p "${SRC_DIR}" "${TMP_DIR}" "${OUT_DIR}"
+
 case "${command}" in
     "" | "help" )
         echo "Help!" # TODO: useful output

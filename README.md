@@ -12,6 +12,11 @@ These images attempt to cover the following use cases:
  - Replace local TeXlive installations.
  - Build LaTeX documents in CI/CD pipelines.
  - Build legacy documents with old package versions.
+ 
+We also include PoCs to demonstrate that more involved applications can
+be built on top of the base images provided here:
+ 
+ - [Serve a static set of pre-built documents.](demo/static-document-server)
  <!-- - LaTeX build server. -->
  <!-- - Document generation server. -->
 
@@ -24,7 +29,7 @@ Run
 
 to build an image locally.
 Exchange `base-luatex` for any of the profile names in
-    [`profiles`](https://github.com/reitzig/texlive-docker/tree/master/profiles)
+    [`profiles`](profiles)
 to start from another baseline.
 <!-- TODO: build in Actions and deploy to registry; adapt doc -->
 
@@ -32,7 +37,7 @@ to start from another baseline.
 ## Usage
 
 See the scripts in 
-    [`example`](https://github.com/reitzig/texlive-docker/tree/master/example)
+    [`example`](example)
 for different ways to use the images.
 <!-- TODO: document properly -->
 
@@ -45,7 +50,7 @@ The container will install all packages on that list before running the work com
 ### Parameters
 
 You can adjust some defaults of the 
-    [main container script](https://github.com/reitzig/texlive-docker/blob/master/entrypoint.sh)
+    [main container script](entrypoint.sh)
 by 
     [setting environment variables](https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file):
  
