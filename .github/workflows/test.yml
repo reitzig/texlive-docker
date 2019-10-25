@@ -1,0 +1,35 @@
+name: Test
+on:
+  - push
+  - pull_request
+
+jobs:
+  create-minimal:
+    name: Create Minimal Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: "Build Test Image"
+        run: .github/scripts/build-image.sh ${GITHUB_REF##*/} minimal
+      - name: "Test: Print version"
+        run: docker run --rm texlive-minimal:${GITHUB_REF##*/} version
+
+  run-examples:
+    name: Run Usage Examples
+    runs-on: ubuntu-latest
+    needs:
+      - create-minimal
+    steps:
+      - uses: actions/checkout@v1
+      - name: "Build Test Image"
+        run: .github/scripts/build-image.sh ${GITHUB_REF##*/} base-luatex
+      - name: "Test: One-off build"
+        run: .github/scripts/run-example.sh "texlive-base-luatex:${GITHUB_REF##*/}" one-off-build
+      - name: "Test: Repeated build"
+        run: .github/scripts/run-example.sh "texlive-base-luatex:${GITHUB_REF##*/}" repeated-build
+      - name: "Test: Complex build"
+        run: .github/scripts/run-example.sh "texlive-base-luatex:${GITHUB_REF##*/}" complex-build
+      - name: "Test: Interactive build"
+        run: .github/scripts/run-example.sh "texlive-base-luatex:${GITHUB_REF##*/}" interactive-build
+      - name: "Test: Custom Image"
+        run: .github/scripts/run-example.sh "texlive-base-luatex:${GITHUB_REF##*/}" custom-image

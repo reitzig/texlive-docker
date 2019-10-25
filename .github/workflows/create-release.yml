@@ -1,0 +1,15 @@
+name: Create Monthly Release
+on:
+  schedule:
+    - cron:  '* * 1 * *'
+
+jobs:
+  make-tag:
+    name: Make Release Tag
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v1
+      - run: .github/scripts/make-release-tag.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

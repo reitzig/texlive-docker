@@ -1,18 +1,17 @@
 #!/usr/bin/env bash
 
+source "$(dirname $0)/_example_setup.sh" "${@}"
+
 # This is the most ad-hoc approach: a single command will build
 # a LaTeX document in the current folder, once, and remove the
 # container again.
 
-# build image with:
-#   docker build -t texlive-base-luatex --build-arg "profile=base-luatex" .
-
 mkdir -p out
 
-docker run --name=tld-example --interactive --tty --rm \
+docker run --name=tld-example ${tty_params} --rm \
     --volume `pwd`:/work/src:ro \
     --volume `pwd`/out:/work/out \
-    texlive-base-luatex \
+    ${image} \
     work 'lualatex hello_world.tex'
 
 mv out/* ./ && rm -rf out

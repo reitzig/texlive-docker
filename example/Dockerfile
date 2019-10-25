@@ -1,4 +1,5 @@
-FROM texlive-base-luatex
+ARG base_image="texlive-base-luatex"
+FROM ${base_image}
 
 COPY hello_world.tex "${SRC_DIR}/"
 

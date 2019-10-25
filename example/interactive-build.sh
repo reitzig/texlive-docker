@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "$(dirname $0)/_example_setup.sh" "${@}"
+
 # This is the most flexible approach:
 #
 #   - copy files in and out of the container at will
@@ -9,12 +11,9 @@
 # container TeXlive as if you had installed it on your
 # machine, without any convenience wrappers.
 
-# build image with:
-#   docker build -t texlive-base-luatex --build-arg "profile=base-luatex" .
-
 # Start the container: it will not run any command yet!
 docker run --name=tld-example --detach --rm \
-    texlive-base-luatex hold
+    ${image} hold
 
 docker cp . tld-example:/work/src/ # You could also use a bind-mount instead
 docker exec tld-example work 'lualatex hello_world.tex'
