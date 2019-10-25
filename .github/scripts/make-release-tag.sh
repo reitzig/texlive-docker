@@ -16,16 +16,27 @@ else
     next_version="${tlversion}.1"
 fi
 
-repo="$(git remote -v | grep origin | head -n 1 | sed -e 's/^.*github.com:\(.*\)\.git.*$/\1/')"
-current_commit="$(git show-ref refs/heads/master --hash)"
+repo="$(git remote -v | grep origin | head -n 1 | sed -e 's#^.*github.com[:/]\([^\.]*\)\([[:space:]]\|\.git\).*$#\1#')"
+    # fugly regexp to cover both HTTP and SSH remotes
+current_commit="$(git show-ref master --hash | head -n 1)"
 new_tag="release-${next_version}"
 
-# POST a new ref to repo via Github API
-curl    -s -X POST https://api.github.com/repos/reitzig/texlive-docker/git/refs \
-        -H "Authorization: token ${GITHUB_TOKEN}" \
-        -d @- << EOF
+echo "Will try to create tag ${new_tag} on ${repo}:${current_commit}"
+
+# POST a new tag via Github API
+curl -siX POST https://api.github.com/repos/${repo}/git/refs \
+     -H "Authorization: token ${GITHUB_TOKEN}" \
+     -o curl_out \
+     -d @- \
+<< PAYLOAD
 {
   "ref": "refs/tags/${new_tag}",
   "sha": "${current_commit}"
 }
-EOF
+PAYLOAD
+
+# Log response and confirm success
+cat curl_out
+status_code=$(cat curl_out | grep Status: | awk '{ print $2 }')
+[[ ${status_code} =~ 2[0-9]{2} ]]
+exit $?
