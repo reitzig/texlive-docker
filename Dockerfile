@@ -52,15 +52,31 @@ RUN set -eo noclobber; \
         chmod +x /bin/${cmd}; \
     done
 
-# USER ?
 WORKDIR /work
-
 ENV BUILDSCRIPT="build.sh"
 ENV TEXLIVEFILE="Texlivefile"
 ENV OUTPUT="*.pdf *.log"
 
-# TODO: add meaningful labels
-#   --> http://label-schema.org/
+# Labels as per OCI annotation spec
+# cf. https://github.com/opencontainers/image-spec/blob/master/annotations.md (Oct 2019)
+ARG label_maintainer="Raphael Reitzig"
+ARG label_github="https://github.com/reitzig/texlive-docker"
+ARG label_created="nA"
+ARG label_version="nA"
+ARG label_tlversion=""
+ARG label_revision="nA"
+LABEL org.opencontainers.image.created="${label_created}" \
+      org.opencontainers.image.authors="${label_maintainer}" \
+      org.opencontainers.image.url="${label_github}" \
+      org.opencontainers.image.documentation="${label_github}" \
+      org.opencontainers.image.source="${label_github}" \
+      org.opencontainers.image.version="${label_version}" \
+      org.opencontainers.image.revision="${label_revision}" \
+      org.opencontainers.image.vendor="${label_maintainer}" \
+      org.opencontainers.image.licenses="Apache-2.0" \
+      # org.opencontainers.image.ref.name -- doesn't apply
+      org.opencontainers.image.title="TeXlive ${label_tlversion} (${profile})"
+      # org.opencontainers.image.description -- not much more to tell
 
 # TODO: ONBUILD to install additional packages?
 

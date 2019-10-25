@@ -65,7 +65,7 @@ case "${command}" in
         # Copy output to final destination
         cp ${OUTPUT} "${OUT_DIR}"/
         ;;
-    *)
+    * )
         echo "Unknown command '${command}'"
         exit 1
         ;;
