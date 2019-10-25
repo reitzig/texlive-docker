@@ -8,10 +8,10 @@
 
 mkdir -p out
 
-docker run -it --rm --name=tld-example \
-    -v `pwd`:/work/src:ro \
-    -v `pwd`/out:/work/out \
-    -e 'BUILDSCRIPT=_custom-build-script.sh' \
+docker run --name=tld-example --interactive --tty --rm  \
+    --volume `pwd`:/work/src:ro \
+    --volume `pwd`/out:/work/out \
+    --env 'BUILDSCRIPT=_custom-build-script.sh' \
     texlive-base-luatex \
     work
 

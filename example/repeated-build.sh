@@ -9,15 +9,15 @@
 # build image with:
 #   docker build -t texlive-base-luatex --build-arg "profile=base-luatex" .
 
-docker run -it --name=tld-example \
-    -v `pwd`:/work/src:ro \
+docker run --name=tld-example --interactive --tty \
+    --volume `pwd`:/work/src:ro \
     texlive-base-luatex \
     work 'lualatex hello_world.tex'
 
-docker start -ai tld-example
+docker start --attach --interactive tld-example
 docker cp tld-example:/work/out/ ./ \
  && mv out/* ./ \
  && rm -rf out # You could also use a bind-mount instead
 # Repeat these steps as needed
 
-docker rm -f tld-example > /dev/null
+docker rm --force tld-example > /dev/null

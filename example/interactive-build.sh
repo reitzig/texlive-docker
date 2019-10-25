@@ -13,11 +13,11 @@
 #   docker build -t texlive-base-luatex --build-arg "profile=base-luatex" .
 
 # Start the container: it will not run any command yet!
-docker run --rm -d --name=tld-example \
+docker run --name=tld-example --detach --rm \
     texlive-base-luatex hold
 
 docker cp . tld-example:/work/src/ # You could also use a bind-mount instead
-docker exec tld-example entrypoint work 'lualatex hello_world.tex'
+docker exec tld-example work 'lualatex hello_world.tex'
 docker cp tld-example:/work/out/ ./ \
     && mv out/* ./ \
     && rm -rf out # You could also use a bind-mount instead
@@ -31,4 +31,4 @@ docker cp tld-example:/work/out/ ./ \
 #   docker exec -it bash
 # to step "into" the container for debugging of full low-level access.
 
-docker rm -f tld-example > /dev/null
+docker rm --force tld-example > /dev/null

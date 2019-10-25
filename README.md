@@ -9,8 +9,9 @@ install additional packages from CTAN if and when needed.
 
 These images attempt to cover the following use cases:
 
- - Replace local TeXlive installation.
+ - Replace local TeXlive installations.
  - Build LaTeX documents in CI/CD pipelines.
+ - Build legacy documents with old package versions.
  <!-- - LaTeX build server. -->
  <!-- - Document generation server. -->
 
@@ -34,7 +35,6 @@ See the scripts in
     [`example`](https://github.com/reitzig/texlive-docker/tree/master/example)
 for different ways to use the images.
 <!-- TODO: document properly -->
-<!-- TODO: Write a small script/program tlcrane to wrap those use cases nicely? -->
 
 ### Dependencies
 
@@ -66,7 +66,7 @@ All output of the work command is collected in a single folder; extract it with:
 
 <!-- ## Customization
 
-Custom profile -> docker build --build-arg "profile=foo" 
+Custom profile -> docker build --build-arg "profile=foo"  ( !! note hacks !! )
      FROM + RUN tlmgr install 
      FROM + ... + COPY _ ${SRC_DIR}
 

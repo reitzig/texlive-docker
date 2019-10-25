@@ -9,9 +9,9 @@
 
 mkdir -p out
 
-docker run -it --rm --name=tld-example \
-    -v `pwd`:/work/src:ro \
-    -v `pwd`/out:/work/out \
+docker run --name=tld-example --interactive --tty --rm \
+    --volume `pwd`:/work/src:ro \
+    --volume `pwd`/out:/work/out \
     texlive-base-luatex \
     work 'lualatex hello_world.tex'
 

@@ -44,6 +44,12 @@ ENV OUT_DIR="${out_dir}"
 VOLUME [ "${src_dir}", "${tmp_dir}", "${out_dir}" ]
 
 COPY entrypoint.sh /bin/entrypoint
+# Add "aliases" to align `docker run` and `docker exec` usage.
+RUN set -eo noclobber; \
+    for cmd in help version hold clean work; do \
+        echo -e "#!/bin/sh\n\nentrypoint ${cmd} \"\${@}\"" > /bin/${cmd}; \
+        chmod +x /bin/${cmd}; \
+    done
 
 # USER ?
 WORKDIR /work
@@ -55,5 +61,8 @@ ENV OUTPUT="*.pdf *.log"
 # TODO: add meaningful labels
 #   --> http://label-schema.org/
 
+# TODO: ONBUILD to install additional packages?
+
+STOPSIGNAL SIGKILL
 ENTRYPOINT [ "/bin/entrypoint" ]
 CMD [ "help" ]
