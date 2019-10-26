@@ -19,7 +19,7 @@ function make_docker_tag {
 }
 
 case "${ref}" in
-    ref/tags/release-* )
+    refs/tags/release-* )
         version="${ref##*/release-}"
 
         # Confirm that release tag and to-be-installed version match
@@ -41,7 +41,7 @@ case "${ref}" in
         make_docker_tag ${profile} ${version} >> ${image_tag_list}
         make_docker_tag ${profile} latest >> ${image_tag_list}
         ;;
-    ref/tags/pre-* )
+    refs/tags/pre-* )
         version="${ref##*/pre-}"
         docker build \
             --cache-from "${installer_image}" \
