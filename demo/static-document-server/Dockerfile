@@ -1,9 +1,7 @@
 ARG out_dir="/work/out"
-# This is needed to all stages agree about the output directory
+# This is needed so all stages agree about the output directory
 
-# build base image with:
-#   docker build -t texlive-base-luatex --build-arg "profile=base-luatex" .
-FROM texlive-base-luatex AS build
+FROM reitzig/texlive-base-luatex AS build
 
 COPY . "${SRC_DIR}/"
 ENV BUILDSCRIPT="create_many_documents.sh"

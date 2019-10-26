@@ -11,8 +11,18 @@ These images attempt to cover the following use cases:
  - Replace local TeXlive installations.
  - Build LaTeX documents in CI/CD pipelines.
  - Build legacy documents with old package versions.
- 
-We also include PoCs to demonstrate that more involved applications can
+
+We currently publish the following images based on different selections
+from the TeXlive collections suggested by [the installer][install-tl]; 
+from smaller to larger:
+
+ - [reitzig/texlive-minimal][minimal-dockerhub] ([profile][minimal-profile])
+ - [reitzig/texlive-base][base-dockerhub] ([profile][base-profile])
+ - [reitzig/texlive-base-luatex][base-luatex-dockerhub] ([profile][base-luatex-profile])
+ - [reitzig/texlive-base-xetex][base-xetex-dockerhub] ([profile][base-xetex-profile])
+ - [reitzig/texlive-full][full-dockerhub] ([profile][full-profile])
+
+We also provide PoCs to demonstrate that more involved applications can
 be built on top of the base images provided here:
  
  - [Serve a static set of pre-built documents.][demo-static-serve]
@@ -81,10 +91,7 @@ There are two ways to go about that:
             See a matching note in Dockerfile. Any advice is appreciated. -->
        
    Copy the resulting file to [`profiles`][profiles] and run the regular build command.
-
-Custom profile -> docker build --build-arg "profile=foo"  ( !! note hacks !! )
-     FROM + RUN tlmgr install 
-     FROM + ... + COPY _ ${SRC_DIR}
+   
 
 <!-- Note: These will be rewritten by update-dockerhub-info.sh before pushing to Docker Hub -->
 [examples]: examples
@@ -92,6 +99,17 @@ Custom profile -> docker build --build-arg "profile=foo"  ( !! note hacks !! )
 [entrypoint]: entrypoint.sh
 [custom-dockerfile]: examples/Dockerfile
 [demo-static-serve]: demo/static-document-server
+
+[minimal-dockerhub]: https://hub.docker.com/r/reitzig/texlive-minimal
+[minimal-profile]: profiles/minimal.profile
+[base-dockerhub]: https://hub.docker.com/r/reitzig/texlive-base
+[base-profile]: profiles/base.profile
+[base-luatex-dockerhub]: https://hub.docker.com/r/reitzig/texlive-base-luatex
+[base-luatex-profile]: profiles/base-luatex.profile
+[base-xetex-dockerhub]: https://hub.docker.com/r/reitzig/texlive-base-xetex
+[base-xetex-profile]: profiles/base-xetex.profile
+[full-dockerhub]: https://hub.docker.com/r/reitzig/texlive-full
+[full-profile]: profiles/full.profile
 
 [docker-set-env]: https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file
 [install-tl]: https://www.tug.org/texlive/acquire-netinstall.html
