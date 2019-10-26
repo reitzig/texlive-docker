@@ -4,7 +4,11 @@ on:
     branches:
       - '**'
     branches-ignore::
-      - wip-*
+      - 'wip-*'
+    paths:
+      - '!**.md'
+      - '!LICENSE'
+      - 'demo/**'
   create:
 
 env:
