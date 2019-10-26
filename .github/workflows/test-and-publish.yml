@@ -1,13 +1,11 @@
 name: "Test & Publish"
 on:
   push:
-    branches:
-      - '**'
-    branches-ignore::
+    branches-ignore:
       - 'wip-*'
-    paths:
-      - '!**.md'
-      - '!LICENSE'
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
       - 'demo/**'
   create:
 
@@ -77,14 +75,19 @@ jobs:
             .github/scripts/build-image.sh ${GITHUB_REF} ${p%.profile}
           done
       - name: Publish images
-        env:
-          DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
-        run: | # TODO: really publish
+        run: |
+          repo=${{ github.repository }}
+          docker login --username ${repo%/*} --password ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           while IFS= read -r tag; do
-             echo "publish: ${tag}"
+             docker push "${tag}"
           done <"${IMAGE_TAG_LIST}"
+          docker logout
       - name: Create Github release
+        uses: actions/create-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "nyi (create release)" # TODO: create release
-        # --> https://github.com/actions/create-release
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: ${{ startsWith(github.ref, 'refs/tags/pre-') }}
