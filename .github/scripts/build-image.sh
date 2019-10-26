@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+source "$(dirname $0)/_shared_functions.sh"
+
 set -eu
 
 installer_image=${TEXLIVE_INSTALLER_IMAGE:-'texlive-installer:latest'}
@@ -13,7 +15,7 @@ commit_time="$(date --date=@$(git show -s --format=%ct HEAD) --rfc-3339=seconds)
 tlversion="$(docker run --rm "${installer_image}" | head -n 1 | awk '{print $5 }')"
 
 function make_docker_tag {
-    echo "reitzig/texlive-${1}:${2}"
+    echo "$(dockerhub_repo "${1}"):${2}"
 }
 
 case "${ref}" in

@@ -1,0 +1,35 @@
+name: "Update DockerHub Info"
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'README.md'
+      - 'LICENSE'
+
+jobs:
+  diagnostics:
+    name: Log Workflow Information
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: "Git Revision"
+        run: echo "${GITHUB_REF}"
+      - name: "Github Event"
+        run: echo -e '${{ toJSON(github.event) }}'
+
+  update-info:
+    name: Update Info
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: "Push Info to Repos"
+        env:
+          GITHUB_REPO: "${{ github.repository }}"
+          DOCKERHUB_USER_NAME: "reitzig"
+          DOCKERHUB_ACCESS_TOKEN: "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}"
+        run: |
+          for p in profiles/*; do
+            p=$(basename ${p})
+            .github/scripts/update-dockerhub-info.sh ${p%.profile}
+          done

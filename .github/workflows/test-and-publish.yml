@@ -12,6 +12,7 @@ on:
 env:
   IMAGE_TAG_LIST: "texlive-image-tags"
   TEXLIVE_INSTALLER_IMAGE: "texlive-installer:latest"
+  DOCKERHUB_USER_NAME: "reitzig"
 
 jobs:
   diagnostics:
@@ -56,6 +57,7 @@ jobs:
         run: .github/scripts/run-example.sh $(head -n 1 "${IMAGE_TAG_LIST}") interactive-build
       - name: "Test: Custom Image"
         run: .github/scripts/run-example.sh $(head -n 1 "${IMAGE_TAG_LIST}") custom-image
+        # TODO: Can we repeat the same step for different inputs?
 
   publish-release:
     name: Publish Images
@@ -76,8 +78,7 @@ jobs:
           done
       - name: Publish images
         run: |
-          repo=${{ github.repository }}
-          docker login --username ${repo%/*} --password ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+          docker login --username ${DOCKERHUB_USER_NAME} --password ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           while IFS= read -r tag; do
              docker push "${tag}"
           done <"${IMAGE_TAG_LIST}"
