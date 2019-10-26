@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:3.10 AS texlive-installer
 
 RUN apk --no-cache add \
     bash \
@@ -20,6 +20,14 @@ RUN wget mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz \
  && tar -xzf install-tl-unx.tar.gz \
  && rm install-tl-unx.tar.gz \
  && mv install-tl-* install-tl
+
+ENTRYPOINT cd install-tl; cat release-texlive.txt
+    # Only used in `make-release-tag.sh`, overwritten for final image below
+
+# # # # # # # # # # # # # # #
+# Re-use the installer image -- built only once during CI/CD!
+#  cf. build-image.sh
+FROM texlive-installer AS texlive
 
 ARG profile=minimal
 COPY "profiles/${profile}.profile" /install-tl/texlive.profile

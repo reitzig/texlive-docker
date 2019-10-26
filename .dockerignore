@@ -1,6 +1,6 @@
 /.github/
 /.idea/
-/example/
+/examples/
 /LICENSE
 .editorconfig
 *.md

@@ -3,13 +3,19 @@ on:
   schedule:
     - cron:  '* * 1 * *'
 
+env:
+  TEXLIVE_INSTALLER_IMAGE: "texlive-installer:latest"
+
 jobs:
   make-tag:
     name: Make Release Tag
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - run: .github/scripts/make-release-tag.sh
+      - name: Obtain Installer
+        run: .github/scripts/build-installer-image.sh
+      - name: Determine TeXlive Version
+        run: .github/scripts/make-release-tag.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   # --> will trigger `test-and-publish.yml` with a `create` event

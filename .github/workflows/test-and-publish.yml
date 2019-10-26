@@ -9,6 +9,7 @@ on:
 
 env:
   IMAGE_TAG_LIST: "texlive-image-tags"
+  TEXLIVE_INSTALLER_IMAGE: "texlive-installer:latest"
 
 jobs:
   diagnostics:
@@ -20,13 +21,15 @@ jobs:
         run: echo "${GITHUB_REF}"
       - name: "Github Event"
         run: echo -e '${{ toJSON(github.event) }}'
-        # TODO: figure out why this sometimes fails (for branches?)
 
   test-create-minimal:
     name: "Test: Create Minimal Image"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Obtain Installer
+        run: .github/scripts/build-installer-image.sh
+        # TODO: Can the separate jobs share this image?
       - name: "Build Test Image"
         run: .github/scripts/build-image.sh ${GITHUB_REF} minimal
       - name: "Test: Print version"
@@ -37,6 +40,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Obtain Installer
+        run: .github/scripts/build-installer-image.sh
       - name: "Build Test Image"
         run: .github/scripts/build-image.sh ${GITHUB_REF} base-luatex
       - name: "Test: One-off build"
@@ -59,6 +64,8 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/pre-') || startsWith(github.ref, 'refs/tags/release-')
     steps:
       - uses: actions/checkout@v1
+      - name: Obtain Installer
+        run: .github/scripts/build-installer-image.sh
       - name: Build images
         run: |
           for p in profiles/*; do
