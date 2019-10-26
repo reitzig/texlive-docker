@@ -55,7 +55,7 @@ curl -siX POST https://hub.docker.com/v2/users/login/ \
 
 PAYLOAD
 
-process_curl_response || exit 1
+process_curl_response | grep -v token || exit 1
 dh_token=$(print_curl_response_json | jq -r .token)
 
 echo "Will try to update the description of ${dh_repo}"
@@ -69,4 +69,4 @@ curl -siX PATCH https://hub.docker.com/v2/repositories/${dh_repo}/ \
 # TODO: icon?
 
 process_curl_response || exit 1
-print_curl_response_json | jq
+print_curl_response_json | jq .
