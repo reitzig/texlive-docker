@@ -30,14 +30,14 @@ ENTRYPOINT cd install-tl; cat release-texlive.txt
 FROM texlive-installer AS texlive
 
 ARG profile=minimal
-COPY "profiles/${profile}.profile" /install-tl/texlive.profile
+COPY "profiles/${profile}.profile" /install-tl/${profile}.profile
 
 # Workaround: installer doesn't seem to handle linuxmusl(-only) install correctly
 RUN mkdir -p /usr/local/texlive/2019/bin \
  && ln -s /usr/local/texlive/2019/bin/x86_64-linuxmusl /usr/local/texlive/2019/bin/x86_64-linux \
  && ln -s /usr/local/texlive/2019/bin/x86_64-linuxmusl/mktexlsr  /usr/local/bin/mktexlsr
 
-RUN (cd install-tl; ./install-tl -profile texlive.profile) \
+RUN (cd install-tl; ./install-tl -profile ${profile}.profile) \
  && rm -rf install-tl \
  && tlmgr version | tail -n 1 > version \
  && echo "Installed on $(date)" >> version
