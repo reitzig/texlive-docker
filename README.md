@@ -93,7 +93,7 @@ There are two ways to go about that:
    Copy the resulting file to [`profiles`][profiles] and run the regular build command.
    
 
-<!-- Note: These will be rewritten by update-dockerhub-info.sh before pushing to Docker Hub -->
+<!-- Note: Repo-relative links will be rewritten by update-dockerhub-info.sh before pushing to Docker Hub -->
 [examples]: examples
 [profiles]: profiles
 [entrypoint]: entrypoint.sh
