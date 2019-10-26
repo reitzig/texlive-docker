@@ -16,20 +16,9 @@ We also include PoCs to demonstrate that more involved applications can
 be built on top of the base images provided here:
  
  - [Serve a static set of pre-built documents.][demo-static-serve]
- <!-- - LaTeX CI pipeline -->
- <!-- - LaTeX build server. -->
- <!-- - Document generation server. -->
-
-## Build
-
-Run
-
-    docker build -t texlive-base-luatex --build-arg "profile=base-luatex" .
-
-to build an image locally.
-Exchange `base-luatex` for any of the profile names in
-    [`profiles`][profiles]
-to start from another baseline.
+ <!-- TODO - LaTeX CI pipeline -->
+ <!-- TODO - LaTeX build server. -->
+ <!-- TODO - Document generation server. -->
 
 
 ## Usage
@@ -57,7 +46,6 @@ by
  - `OUTPUT` (default: `*.pdf *.log`)  
    Shell pattern for all files that should be copied from the working to the output directory.
 
-
 ### Debugging
 
 All output of the work command is collected in a single folder; extract it with:
@@ -65,7 +53,34 @@ All output of the work command is collected in a single folder; extract it with:
     docker cp $container:/work/tmp ./
 
 
-<!-- ## Customization
+## Build
+
+Run
+
+    docker build -t texlive-base-luatex --build-arg "profile=base-luatex" .
+
+to build an image locally. Exchange `base-luatex` for any of the profile names in
+[`profiles`][profiles] to start from another baseline.
+
+### Customization
+
+If you repeatedly need the same exact set of dependencies or even sources, it
+might make sense to create your own TeXlive Docker image.
+There are two ways to go about that:
+
+ - Extend one of the existing image using your own Dockerfile (see [example][custom-dockerfile]);
+   install additional TeXlive (or even Alpine) packages, copy source files
+   or additional scripts into the appropriate folders, fix the work command, or ...
+    
+ - Use [install-tl][install-tl] to create your own TeXlive installation profile. Make sure to
+ 
+    1. select platform `x86_64-linuxmusl` and
+    2. manually change line `binary_x86_64-linux 1` in the resulting profile file
+       to `binary_x86_64-linux 0`.
+       <!-- Yup, it's a workaround; musl-only installs are apparently not well-supported.
+            See a matching note in Dockerfile. Any advice is appreciated. -->
+       
+   Copy the resulting file to [`profiles`][profiles] and run the regular build command.
 
 Custom profile -> docker build --build-arg "profile=foo"  ( !! note hacks !! )
      FROM + RUN tlmgr install 
@@ -75,7 +90,9 @@ Custom profile -> docker build --build-arg "profile=foo"  ( !! note hacks !! )
 [examples]: examples
 [profiles]: profiles
 [entrypoint]: entrypoint.sh
+[custom-dockerfile]: examples/Dockerfile
 [demo-static-serve]: demo/static-document-server
 
-[texlive]: https://www.tug.org/texlive/
 [docker-set-env]: https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file
+[install-tl]: https://www.tug.org/texlive/acquire-netinstall.html
+[texlive]: https://www.tug.org/texlive/
