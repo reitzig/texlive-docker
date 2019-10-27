@@ -23,6 +23,7 @@ readme_profile_filepath="${readme_filepath}_${profile}"
 #  - mentions the profile, and
 #  - resolves relative links to Github.
 cat > "${readme_profile_filepath}" << BADGES
+[![Dockerfile](https://img.shields.io/badge/-Dockerfile%20-blue)](https://github.com/reitzig/texlive-docker/blob/master/Dockerfile)
 [![GitHub issues](https://img.shields.io/github/issues/reitzig/texlive-docker)](https://github.com/reitzig/texlive-docker/issues)
 [![GitHub license](https://img.shields.io/github/license/reitzig/texlive-docker)](https://github.com/reitzig/texlive-docker/blob/master/LICENSE)
 

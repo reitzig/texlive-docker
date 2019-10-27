@@ -33,7 +33,26 @@ be built on top of the base images provided here:
 
 ## Usage
 
-See the scripts in [`examples`][examples] for different ways to use the images.
+The fastest way to build a document at hand (once) is this:
+
+```bash
+docker run --rm \
+    --volume `pwd`:/work/src:ro \
+    --volume `pwd`/out:/work/out \
+    reitzig/texlive-base-luatex \
+    work 'lualatex hello_world.tex'
+```
+
+Note:
+
+ - This assumes that all TeXlive packages beyond what is contained in the
+   `texlive-base-luatex` image are listed in `Texlivefile`.
+   You can also use image `reitzig/texlive-full` instead if you are happy
+   with downloading a (way) larger image.
+ - This may overwrite files in `out`. Chose a folder name that you currently
+   do not use.
+
+See the scripts in [`examples`][examples] for other ways to use the images.
 <!-- TODO: document properly -->
 
 ### Dependencies

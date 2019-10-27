@@ -77,6 +77,7 @@ jobs:
             .github/scripts/build-image.sh ${GITHUB_REF} ${p%.profile}
           done
       - name: Publish images
+        # TODO: Use step output instead of a file?
         run: |
           docker login --username ${DOCKERHUB_USER_NAME} --password ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           while IFS= read -r tag; do
@@ -90,5 +91,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
+          # TODO: Cut off prefix (pre-|release-)
+          # TODO: Update release description to include links to Dockerhub
           draft: false
           prerelease: ${{ startsWith(github.ref, 'refs/tags/pre-') }}
