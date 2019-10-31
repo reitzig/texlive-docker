@@ -78,6 +78,7 @@ jobs:
           done
       - name: Publish images
         # TODO: Use step output instead of a file?
+        #       --> https://help.github.com/en/github/automating-your-workflow-with-github-actions/development-tools-for-github-actions#set-an-output-parameter-set-output
         run: |
           docker login --username ${DOCKERHUB_USER_NAME} --password ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
           while IFS= read -r tag; do
@@ -85,13 +86,18 @@ jobs:
           done <"${IMAGE_TAG_LIST}"
           docker logout
       - name: Create Github release
+        id: create-gh-release
         uses: actions/create-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          # TODO: Cut off prefix (pre-|release-)
-          # TODO: Update release description to include links to Dockerhub
-          draft: false
+          draft: true
           prerelease: ${{ startsWith(github.ref, 'refs/tags/pre-') }}
+      - name: Update Github release info
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          .github/scripts/update-github-release.sh \
+            "${{ steps.create-gh-release.outputs.id }}"

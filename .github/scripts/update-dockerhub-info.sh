@@ -37,7 +37,7 @@ sed \
 
 # Retrieve Github repo information
 # TODO: make an action out of this?
-curl -siX GET https://api.github.com/repos/${GITHUB_REPO} \
+curl -siX GET https://api.github.com/repos/${GITHUB_REPOSITORY} \
      -o ${CURL_OUT}
 process_curl_response || exit 1
 gh_description=$(print_curl_response_json | jq -r .description)

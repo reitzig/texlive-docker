@@ -25,7 +25,6 @@ jobs:
       - uses: actions/checkout@v1
       - name: "Push Info to Repos"
         env:
-          GITHUB_REPO: "${{ github.repository }}"
           DOCKERHUB_USER_NAME: "reitzig"
           DOCKERHUB_ACCESS_TOKEN: "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}"
         run: |

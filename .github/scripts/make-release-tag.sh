@@ -21,15 +21,13 @@ else
 fi
 
 # POST a new tag via Github API
-repo="$(git remote -v | grep origin | head -n 1 | sed -e 's#^.*github.com[:/]\([^\.]*\)\([[:space:]]\|\.git\).*$#\1#')"
-    # fugly regexp to cover both HTTP and SSH remotes
 current_commit="$(git show-ref master --hash | head -n 1)"
 new_tag="release-${next_version}"
-echo "Will try to create tag ${new_tag} on ${repo}:${current_commit}"
+echo "Will try to create tag ${new_tag} on ${GITHUB_REPOSITORY}:${current_commit}"
 
 # First, create the tag _object_ (for the annotation)
 # cf. https://developer.github.com/v3/git/tags/#create-a-tag-object
-curl -siX POST https://api.github.com/repos/${repo}/git/tags \
+curl -siX POST https://api.github.com/repos/${GITHUB_REPOSITORY}/git/tags \
      -H "Authorization: token ${GITHUB_TOKEN}" \
      -o ${CURL_OUT} \
      -d @- \
@@ -52,7 +50,7 @@ process_curl_response || exit 1
 
 # Now, create the tag _reference_ (to have an actual Git tag)
 # cf. https://developer.github.com/v3/git/refs/#create-a-reference
-curl -siX POST https://api.github.com/repos/${repo}/git/refs \
+curl -siX POST https://api.github.com/repos/${GITHUB_REPOSITORY}/git/refs \
      -H "Authorization: token ${GITHUB_TOKEN}" \
      -o ${CURL_OUT} \
      -d @- \
