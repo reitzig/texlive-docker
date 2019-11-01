@@ -5,15 +5,14 @@ source "$(dirname $0)/_shared_functions.sh"
 installer_image=${TEXLIVE_INSTALLER_IMAGE:-'texlive-installer:latest'}
 
 # Get the TeXlive installer and extract the major version
-tlversion="$(docker run --rm "${installer_image}" | head -n 1 | awk '{print $5 }')"
+tlversion="$(docker run --rm "${installer_image}" | head -n 1 | awk '{ print $5 }')"
 
 # Check if this version was released before
 set -o pipefail
-last_tag="$(git tag | grep release-${tlversion}. | sort -rh | head -n 1)"
+last_minor_version="$(git tag | grep release-${tlversion}. | sed -e "s/release-${tlversion}\.//" | sort -rn | head -n 1)"
 
 if [[ $? -eq 0 ]]; then
     # Increment "minor version"
-    last_minor_version="${last_tag#release-${tlversion}.}"
     next_version="${tlversion}.$(($last_minor_version + 1))"
 else
     # No tag for this TeXlive version yet, start over
