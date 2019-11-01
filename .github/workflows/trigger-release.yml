@@ -1,7 +1,7 @@
 name: Create Monthly Release
 on:
   schedule:
-    - cron:  '* * 1 * *'
+    - cron:  '0 0 1 * *'
 
 env:
   TEXLIVE_INSTALLER_IMAGE: "texlive-installer:latest"
