@@ -33,6 +33,7 @@ jobs:
       - name: Obtain Installer
         run: .github/scripts/build-installer-image.sh
         # TODO: Can the separate jobs share this image?
+        # TODO: build daily? and push to Github registry?
       - name: "Build Test Image"
         run: .github/scripts/build-image.sh ${GITHUB_REF} minimal
       - name: "Test: Print version"
@@ -95,6 +96,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: true
           prerelease: ${{ startsWith(github.ref, 'refs/tags/pre-') }}
+      # TODO: Compute release info before creating the release; communicate by step output
       - name: Update Github release info
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
