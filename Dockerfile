@@ -38,7 +38,11 @@ RUN tlversion=$(cat install-tl/release-texlive.txt | head -n 1 | awk '{ print $5
  && ln -s /usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl /usr/local/texlive/${tlversion}/bin/x86_64-linux \
  && ln -s /usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl/mktexlsr /usr/local/bin/mktexlsr
 
-RUN (cd install-tl; ./install-tl -profile ${profile}.profile) \
+RUN (  cd install-tl \
+    && tlversion=$(cat release-texlive.txt | head -n 1 | awk '{ print $5 }') \
+    && sed -i "s/\${tlversion}/${tlversion}/g" ${profile}.profile \
+    && ./install-tl -profile ${profile}.profile \
+ ) \
  && rm -rf install-tl \
  && tlmgr version | tail -n 1 > version \
  && echo "Installed on $(date)" >> version

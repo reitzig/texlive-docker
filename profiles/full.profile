@@ -1,11 +1,11 @@
 selected_scheme scheme-full
-TEXDIR /usr/local/texlive/2019
-TEXMFCONFIG ~/.texlive2019/texmf-config
+TEXDIR /usr/local/texlive/${tlversion}
+TEXMFCONFIG ~/.texlive${tlversion}/texmf-config
 TEXMFHOME ~/texmf
 TEXMFLOCAL /usr/local/texlive/texmf-local
-TEXMFSYSCONFIG /usr/local/texlive/2019/texmf-config
-TEXMFSYSVAR /usr/local/texlive/2019/texmf-var
-TEXMFVAR ~/.texlive2019/texmf-var
+TEXMFSYSCONFIG /usr/local/texlive/${tlversion}/texmf-config
+TEXMFSYSVAR /usr/local/texlive/${tlversion}/texmf-var
+TEXMFVAR ~/.texlive${tlversion}/texmf-var
 binary_x86_64-linux 0
 binary_x86_64-linuxmusl 1
 instopt_adjustpath 1

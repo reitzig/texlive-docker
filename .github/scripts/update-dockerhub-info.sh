@@ -31,7 +31,7 @@ BADGES
 
 sed \
     -e "s/\(# TeXlive Docker Image\)s/\1 (${profile})/" \
-    -e '/^\[.\+\]:[[:space:]]\+https:\/\//! s#^\[\(.\+\)\]:[[:space:]]\+\([[:alnum:]]\)#[\1]: https://github.com/'${GITHUB_REPO}'/blob/master/\2#g' \
+    -e '/^\[.\+\]:[[:space:]]\+https:\/\//! s#^\[\(.\+\)\]:[[:space:]]\+\([[:alnum:]]\)#[\1]: https://github.com/'${GITHUB_REPOSITORY}'/blob/master/\2#g' \
     "${readme_filepath}" \
     >> "${readme_profile_filepath}"
 

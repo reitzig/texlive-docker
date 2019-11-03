@@ -18,7 +18,7 @@ jobs:
         run: .github/scripts/make-release-tag.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN_REITZIG }}
-          # Note: use "real" access token so workflow trigger isn't surpressed
+          # Note: use "real" access token so workflow trigger isn't suppressed
           #       cf https://github.community/t5/GitHub-Actions/Tag-created-by-API-does-not-trigger-create/m-p/36686/highlight/true#M2653
   # --> will trigger `test-and-publish.yml` with a `create` event
 

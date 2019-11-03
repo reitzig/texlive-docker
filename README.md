@@ -97,7 +97,7 @@ If you repeatedly need the same exact set of dependencies or even sources, it
 might make sense to create your own TeXlive Docker image.
 There are two ways to go about that:
 
- - Extend one of the existing image using your own Dockerfile (see [example][custom-dockerfile]);
+ - Extend one of the existing images using your own Dockerfile (see [example][custom-dockerfile]);
    install additional TeXlive (or even Alpine) packages, copy source files
    or additional scripts into the appropriate folders, fix the work command, or ...
     
@@ -108,8 +108,11 @@ There are two ways to go about that:
        to `binary_x86_64-linux 0`.
        <!-- Yup, it's a workaround; musl-only installs are apparently not well-supported.
             See a matching note in Dockerfile. Any advice is appreciated. -->
+   
+   If you want to use your profile across different TeXlive versions,
+   replace all occurrences of the TeXlive version (e.g. `2019`) with `${tlversion}`.
        
-   Copy the resulting file to [`profiles`][profiles] and run the regular build command.
+   Copy the final file to [`profiles`][profiles] and run the regular build command.
    
 
 <!-- Note: Repo-relative links will be rewritten by update-dockerhub-info.sh before pushing to Docker Hub -->

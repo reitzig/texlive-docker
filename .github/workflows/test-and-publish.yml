@@ -33,7 +33,7 @@ jobs:
       - name: Obtain Installer
         run: .github/scripts/build-installer-image.sh
         # TODO: Can the separate jobs share this image?
-        # TODO: build daily? and push to Github registry?
+        # TODO: build daily? and push to Github registry? (--> catch APK upgrades)
       - name: "Build Test Image"
         run: .github/scripts/build-image.sh ${GITHUB_REF} minimal
       - name: "Test: Print version"
@@ -59,6 +59,7 @@ jobs:
       - name: "Test: Custom Image"
         run: .github/scripts/run-example.sh $(head -n 1 "${IMAGE_TAG_LIST}") custom-image
         # TODO: Can we repeat the same step for different inputs?
+        # TODO: Split into separate jobs so they can be run in parallel?
 
   publish-release:
     name: Publish Images
