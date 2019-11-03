@@ -53,7 +53,6 @@ Note:
    do not use.
 
 See the scripts in [`examples`][examples] for other ways to use the images.
-<!-- TODO: document properly -->
 
 ### Dependencies
 

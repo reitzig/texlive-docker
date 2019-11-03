@@ -17,13 +17,15 @@ docker run --name=tld-example --detach --rm \
 
 docker cp . tld-example:/work/src/ # You could also use a bind-mount instead
 docker exec tld-example work 'lualatex hello_world.tex'
+    # NB: You don't _have_ to use `(entrypoint) work`, it just takes care of
+    #     the default file "flow" and dependency handling.
 docker cp tld-example:/work/out/ ./ \
     && mv out/* ./ \
     && rm -rf out # You could also use a bind-mount instead
 # Repeat these steps, maybe with modifications, as needed.
 
 # Use
-#   docker exec tld-example entrypoint clean
+#   docker exec tld-example clean
 # to empty out the working directory and let lualatex start from scratch.
 
 # Use
