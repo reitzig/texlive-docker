@@ -1,27 +1,27 @@
 FROM alpine:3.10 AS texlive-installer
 
 RUN apk --no-cache add \
-    bash \
-    cairo \
-    icu-libs \
-    libgcc \
-    libpaper \
-    libpng \
-    libstdc++ \
-    libx11 \
-    musl \
-    perl \
-    pixman \
-    wget \
-    xz \
-    zlib
+    bash=5.0.0-r0 \
+    cairo=1.16.0-r2 \
+    icu-libs=64.2-r0 \
+    libgcc=8.3.0-r0 \
+    libpaper=1.1.26-r0 \
+    libpng=1.6.37-r1 \
+    libstdc++=8.3.0-r0 \
+    libx11=1.6.8-r1 \
+    musl=1.1.22-r3 \
+    perl=5.28.2-r1 \
+    pixman=0.38.4-r0 \
+    wget=1.20.3-r0 \
+    xz=5.2.4-r0 \
+    zlib=1.2.11-r1
 
 RUN wget mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz \
  && tar -xzf install-tl-unx.tar.gz \
  && rm install-tl-unx.tar.gz \
  && mv install-tl-* install-tl
 
-ENTRYPOINT cd install-tl; cat release-texlive.txt
+ENTRYPOINT cat install-tl/release-texlive.txt
     # Only used in `make-release-tag.sh`, overwritten for final image below
 
 # # # # # # # # # # # # # # #
@@ -33,9 +33,10 @@ ARG profile=minimal
 COPY "profiles/${profile}.profile" /install-tl/${profile}.profile
 
 # Workaround: installer doesn't seem to handle linuxmusl(-only) install correctly
-RUN mkdir -p /usr/local/texlive/2019/bin \
- && ln -s /usr/local/texlive/2019/bin/x86_64-linuxmusl /usr/local/texlive/2019/bin/x86_64-linux \
- && ln -s /usr/local/texlive/2019/bin/x86_64-linuxmusl/mktexlsr  /usr/local/bin/mktexlsr
+RUN tlversion=$(cat install-tl/release-texlive.txt | head -n 1 | awk '{ print $5 }') \
+ && mkdir -p /usr/local/texlive/${tlversion}/bin \
+ && ln -s /usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl /usr/local/texlive/${tlversion}/bin/x86_64-linux \
+ && ln -s /usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl/mktexlsr /usr/local/bin/mktexlsr
 
 RUN (cd install-tl; ./install-tl -profile ${profile}.profile) \
  && rm -rf install-tl \
