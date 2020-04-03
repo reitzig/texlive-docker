@@ -1,5 +1,8 @@
 name: "Test & Publish"
 on:
+  schedule:
+    - cron:  '0 16 25 * *'
+    # Verify that (most) things work before running the monthly release.
   push:
     branches-ignore:
       - 'wip-*'
