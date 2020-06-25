@@ -10,7 +10,7 @@ RUN apk --no-cache add \
     libstdc++=8.3.0-r0 \
     libx11=1.6.8-r1 \
     musl=1.1.22-r3 \
-    perl=5.28.2-r1 \
+    perl=5.28.3-r0 \
     pixman=0.38.4-r0 \
     wget=1.20.3-r0 \
     xz=5.2.4-r0 \
