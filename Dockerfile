@@ -2,7 +2,7 @@ FROM alpine:3.10 AS texlive-installer
 
 RUN apk --no-cache add \
     bash=5.0.0-r0 \
-    cairo=1.16.0-r2 \
+    cairo=1.16.0-r3 \
     icu-libs=64.2-r1 \
     libgcc=8.3.0-r0 \
     libpaper=1.1.26-r0 \
