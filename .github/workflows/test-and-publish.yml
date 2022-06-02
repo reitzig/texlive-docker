@@ -1,7 +1,7 @@
 name: "Test & Publish"
 on:
   schedule:
-    - cron:  '0 16 25 * *'
+    - cron: '0 16 25 * *'
     # Verify that (most) things work before running the monthly release.
   push:
     branches-ignore:
@@ -11,6 +11,7 @@ on:
       - 'LICENSE'
       - 'demo/**'
   create:
+  workflow_dispatch:
 
 env:
   IMAGE_TAG_LIST: "texlive-image-tags"
