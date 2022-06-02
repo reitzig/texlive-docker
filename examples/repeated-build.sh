@@ -11,7 +11,7 @@ source "$(dirname $0)/_example_setup.sh" "${@}"
 docker run --name=tld-example ${tty_params} \
     --volume `pwd`:/work/src:ro \
     ${image} \
-    work 'lualatex hello_world.tex'
+    work lualatex hello_world.tex
 
 docker start --attach ${tty_params} tld-example
 docker cp tld-example:/work/out/ ./ \

@@ -39,7 +39,7 @@ docker run --rm \
     --volume `pwd`:/work/src:ro \
     --volume `pwd`/out:/work/out \
     reitzig/texlive-base-luatex \
-    work 'lualatex hello_world.tex'
+    work lualatex hello_world.tex
 ```
 
 Note:

@@ -12,7 +12,7 @@ docker run --name=tld-example ${tty_params} --rm \
     --volume `pwd`:/work/src:ro \
     --volume `pwd`/out:/work/out \
     ${image} \
-    work 'lualatex hello_world.tex'
+    work lualatex hello_world.tex
 
 mv out/* ./ && rm -rf out
 
