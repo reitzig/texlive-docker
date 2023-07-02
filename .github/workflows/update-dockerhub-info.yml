@@ -6,6 +6,7 @@ on:
     paths:
       - 'README.md'
       - 'LICENSE'
+  workflow_dispatch:
 
 jobs:
   diagnostics:

@@ -4,6 +4,7 @@ on:
     - cron: '0 0 1 * *'
   repository_dispatch:
     types: manual-release
+  workflow_dispatch:
 
 env:
   TEXLIVE_INSTALLER_IMAGE: "texlive-installer:latest"
