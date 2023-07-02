@@ -1,0 +1,23 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:base",
+        "docker:pinDigests",
+        "regexManagers:dockerfileVersions",
+    ],
+    "packageRules": [
+        {
+            "matchPaths": ["demo/**", "examples/**"],
+            "enabled": false,
+        },
+        {
+            "matchFiles": ["Dockerfile"],
+            "schedule": [
+                "* 15 28 * *",  // just before our monthly test run, cf. test-and-publish.yml
+                "* 5 1 * *"     // just before our monthly release, cf. trigger-release.yml
+            ],
+            "automerge": "true",
+            "groupName": "base image",
+        },
+    ],
+}
