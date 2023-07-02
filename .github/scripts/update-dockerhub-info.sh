@@ -62,9 +62,16 @@ dh_token=$(print_curl_response_json | jq -r .token)
 echo "Will try to update the description of ${dh_repo}"
 curl -siX PATCH "https://hub.docker.com/v2/repositories/${dh_repo}/" \
      -H "Authorization: JWT ${dh_token}" \
+     -H "Content-Type: application/json" \
      -o "${CURL_OUT}" \
-     --data-urlencode description="${gh_description}" \
-     --data-urlencode full_description@"${readme_profile_filepath}"
+     --data @- << PAYLOAD
+{
+    "description": "${gh_description}",
+    "full_description": $(jq -Rsa . "${readme_profile_filepath}")
+}
+PAYLOAD
+# NB: jq outputs a JSON string, that is `"..."`.
+#     Therefore, we don't add additional quotes, which break the outer JSON!
 
 # TODO: tags/categories/topics? << Github topics
 # TODO: icon?
