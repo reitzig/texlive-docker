@@ -19,8 +19,6 @@ from smaller to larger:
 - [reitzig/texlive-minimal][minimal-dockerhub] ([profile][minimal-profile])
 - [reitzig/texlive-base][base-dockerhub] ([profile][base-profile])
 - [reitzig/texlive-base-luatex][base-luatex-dockerhub] ([profile][base-luatex-profile])
-- [reitzig/texlive-base-xetex][base-xetex-dockerhub] ([profile][base-xetex-profile])
-- [reitzig/texlive-full][full-dockerhub] ([profile][full-profile])
 
 We also provide PoCs to demonstrate that more involved applications can
 be built on top of the base images provided here:
@@ -127,10 +125,6 @@ There are two ways to go about that:
 [base-profile]: profiles/base.profile
 [base-luatex-dockerhub]: https://hub.docker.com/r/reitzig/texlive-base-luatex
 [base-luatex-profile]: profiles/base-luatex.profile
-[base-xetex-dockerhub]: https://hub.docker.com/r/reitzig/texlive-base-xetex
-[base-xetex-profile]: profiles/base-xetex.profile
-[full-dockerhub]: https://hub.docker.com/r/reitzig/texlive-full
-[full-profile]: profiles/full.profile
 
 [docker-set-env]: https://docs.docker.com/engine/reference/commandline/run/#set-environment-variables--e---env---env-file
 [install-tl]: https://www.tug.org/texlive/acquire-netinstall.html
