@@ -31,11 +31,11 @@ export -f list_entry
 # TODO: Include tag annotation?
 # TODO: include some form of changelog?
 
+# shellcheck disable=SC2016 # false positive
 new_body="$(tr -d '\n' << BODY
 ${release_body%\"} \\r\\n \\r\\n
 
 ### Published images \\r\\n \\r\\n
-# shellcheck disable=SC2016 # false positive
 $(grep -ve ':latest$' "${image_tag_list}" | xargs -n 1 -I {} bash -c 'list_entry "${@}"' _ {})"
 
 BODY

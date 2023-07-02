@@ -24,7 +24,8 @@ We also provide PoCs to demonstrate that more involved applications can
 be built on top of the base images provided here:
 
 - [Serve a static set of pre-built documents.][demo-static-serve]
-<!-- TODO - LaTeX CI pipeline -->
+<!-- TODO - devcontainers -->
+<!-- TODO - LaTeX CI pipeline: https://github.com/reitzig/dh-tools -->
 <!-- TODO - LaTeX build server. -->
 <!-- TODO - Document generation server. -->
 
