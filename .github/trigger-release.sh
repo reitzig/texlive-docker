@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: Obsolete? Can trigger Workflow from web UI these days.
+
 set -eu
 
 read -sp "Github API Token: " ght

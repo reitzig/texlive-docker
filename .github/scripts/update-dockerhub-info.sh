@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "$(dirname $0)/_shared_functions.sh"
+source "$(dirname "${0}")/_shared_functions.sh"
 
 # TODO: It would be nicer to use the original action:
 #           https://github.com/peter-evans/dockerhub-description/blob/master/entrypoint.sh
@@ -31,14 +31,14 @@ BADGES
 
 sed \
     -e "s/\(# TeXlive Docker Image\)s/\1 (${profile})/" \
-    -e '/^\[.\+\]:[[:space:]]\+https:\/\//! s#^\[\(.\+\)\]:[[:space:]]\+\([[:alnum:]]\)#[\1]: https://github.com/'${GITHUB_REPOSITORY}'/blob/master/\2#g' \
+    -e '/^\[.\+\]:[[:space:]]\+https:\/\//! s#^\[\(.\+\)\]:[[:space:]]\+\([[:alnum:]]\)#[\1]: https://github.com/'"${GITHUB_REPOSITORY}"'/blob/master/\2#g' \
     "${readme_filepath}" \
     >> "${readme_profile_filepath}"
 
 # Retrieve Github repo information
 # TODO: make an action out of this?
-curl -siX GET https://api.github.com/repos/${GITHUB_REPOSITORY} \
-     -o ${CURL_OUT}
+curl -siX GET "https://api.github.com/repos/${GITHUB_REPOSITORY}" \
+     -o "${CURL_OUT}"
 process_curl_response || exit 1
 gh_description=$(print_curl_response_json | jq -r .description)
 
@@ -46,7 +46,7 @@ gh_description=$(print_curl_response_json | jq -r .description)
 echo "Acquire Docker Hub login token"
 curl -siX POST https://hub.docker.com/v2/users/login/ \
      -H "Content-Type: application/json" \
-     -o ${CURL_OUT} \
+     -o "${CURL_OUT}" \
      -d @- \
 << PAYLOAD
 {
@@ -60,11 +60,11 @@ process_curl_response | grep -v token || exit 1
 dh_token=$(print_curl_response_json | jq -r .token)
 
 echo "Will try to update the description of ${dh_repo}"
-curl -siX PATCH https://hub.docker.com/v2/repositories/${dh_repo}/ \
+curl -siX PATCH "https://hub.docker.com/v2/repositories/${dh_repo}/" \
      -H "Authorization: JWT ${dh_token}" \
-     -o ${CURL_OUT} \
-     --data-urlencode description=${gh_description} \
-     --data-urlencode full_description@${readme_profile_filepath}
+     -o "${CURL_OUT}" \
+     --data-urlencode description="${gh_description}" \
+     --data-urlencode full_description@"${readme_profile_filepath}"
 
 # TODO: tags/categories/topics? << Github topics
 # TODO: icon?

@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
-source "$(dirname $0)/_shared_functions.sh"
+source "$(dirname "${0}")/_shared_functions.sh"
 
 set -eu
 
 release_id="${1}"
+# shellcheck disable=SC2153 # false positive
 image_tag_list="${IMAGE_TAG_LIST}"
 
 # Get current values
-curl -siX GET https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${release_id} \
+curl -siX GET "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${release_id}" \
      -H "Authorization: token ${GITHUB_TOKEN}" \
-     -o ${CURL_OUT}
+     -o "${CURL_OUT}"
 process_curl_response || exit 1
 
 release_name="$(print_curl_response_json | jq '."name"' )"
 release_body="$(print_curl_response_json | jq '."body" // ""' )"
 
 # Remove version prefix from title
-new_name="$(echo "${release_name}" | sed -e 's/\(pre-\|release-\)//')"
+new_name="${release_name//@(pre-|release-)/}"
 
 # Add list with new images to body
 function list_entry {
@@ -34,15 +35,16 @@ new_body="$(tr -d '\n' << BODY
 ${release_body%\"} \\r\\n \\r\\n
 
 ### Published images \\r\\n \\r\\n
-$(grep -ve ':latest$' ${image_tag_list} | xargs -n 1 -I {} bash -c 'list_entry "${@}"' _ {})"
+# shellcheck disable=SC2016 # false positive
+$(grep -ve ':latest$' "${image_tag_list}" | xargs -n 1 -I {} bash -c 'list_entry "${@}"' _ {})"
 
 BODY
 )"
 
 # Update release
-curl -siX PATCH https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${release_id} \
+curl -siX PATCH "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/${release_id}" \
      -H "Authorization: token ${GITHUB_TOKEN}" \
-     -o ${CURL_OUT} \
+     -o "${CURL_OUT}" \
      -d @- \
 << PAYLOAD
 {
