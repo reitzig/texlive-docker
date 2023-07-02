@@ -1,20 +1,48 @@
-FROM alpine:3.18 AS texlive-installer
+FROM alpine:3.18@sha256:82d1e9d7ed48a7523bdebc18cf6290bdb97b82302a8a9c27d4fe885949ea94d1 AS texlive-installer
 
+# renovate: datasource=repology depName=alpine_3_18/bash versioning=loose
+ENV BASH_VERSION="5.2.15-r5"
+# renovate: datasource=repology depName=alpine_3_18/cairo versioning=loose
+ENV CAIRO_VERSION="1.17.8-r1"
+# renovate: datasource=repology depName=alpine_3_18/icu versioning=loose
+ENV ICU_LIBS_VERSION="73.2-r1"
+# renovate: datasource=repology depName=alpine_3_18/gcc versioning=loose
+ENV LIBGCC_VERSION="12.2.1_git20220924-r10"
+# renovate: datasource=repology depName=alpine_3_18/libpaper versioning=loose
+ENV LIBPAPER_VERSION="2.1.1-r0"
+# renovate: datasource=repology depName=alpine_3_18/libpng versioning=loose
+ENV LIBPNG_VERSION="1.6.39-r3"
+# renovate: datasource=repology depName=alpine_3_18/gcc versioning=loose
+ENV LIBSTDCPP_VERSION="12.2.1_git20220924-r10"
+# renovate: datasource=repology depName=alpine_3_18/libx11 versioning=loose
+ENV LIBX11_VERSION="1.8.4-r4"
+# renovate: datasource=repology depName=alpine_3_18/musl versioning=loose
+ENV MUSL_VERSION="1.2.4-r0"
+# renovate: datasource=repology depName=alpine_3_18/perl versioning=loose
+ENV PERL_VERSION="5.36.1-r2"
+# renovate: datasource=repology depName=alpine_3_18/pixman versioning=loose
+ENV PIXMAN_VERSION="0.42.2-r1"
+# renovate: datasource=repology depName=alpine_3_18/wget versioning=loose
+ENV WGET_VERSION="1.21.4-r0"
+# renovate: datasource=repology depName=alpine_3_18/xz versioning=loose
+ENV XZ_VERSION="5.4.3-r0"
+# renovate: datasource=repology depName=alpine_3_18/zlib versioning=loose
+ENV ZLIB_VERSION="1.2.13-r1"
 RUN apk --no-cache add \
-    bash=5.2.15-r5 \
-    cairo=1.17.8-r1 \
-    icu-libs=73.2-r1 \
-    libgcc=12.2.1_git20220924-r10 \
-    libpaper=2.1.1-r0 \
-    libpng=1.6.39-r3 \
-    libstdc++=12.2.1_git20220924-r10 \
-    libx11=1.8.4-r4 \
-    musl=1.2.4-r0 \
-    perl=5.36.1-r2 \
-    pixman=0.42.2-r1 \
-    wget=1.21.4-r0 \
-    xz=5.4.3-r0 \
-    zlib=1.2.13-r1
+    bash=${BASH_VERSION} \
+    cairo=${CAIRO_VERSION} \
+    icu-libs=${ICU_LIBS_VERSION} \
+    libgcc=${LIBGCC_VERSION} \
+    libpaper=${LIBPAPER_VERSION} \
+    libpng=${LIBPNG_VERSION} \
+    libstdc++=${LIBSTDCPP_VERSION} \
+    libx11=${LIBX11_VERSION} \
+    musl=${MUSL_VERSION} \
+    perl=${PERL_VERSION} \
+    pixman=${PIXMAN_VERSION} \
+    wget=${WGET_VERSION} \
+    xz=${XZ_VERSION} \
+    zlib=${ZLIB_VERSION}
 
 RUN wget mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz \
  && tar -xzf install-tl-unx.tar.gz \
