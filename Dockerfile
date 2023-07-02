@@ -1,20 +1,20 @@
-FROM alpine:3.10 AS texlive-installer
+FROM alpine:3.18 AS texlive-installer
 
 RUN apk --no-cache add \
-    bash=5.0.0-r0 \
-    cairo=1.16.0-r3 \
-    icu-libs=64.2-r1 \
-    libgcc=8.3.0-r0 \
-    libpaper=1.1.26-r0 \
-    libpng=1.6.37-r1 \
-    libstdc++=8.3.0-r0 \
-    libx11=1.6.12-r1 \
-    musl=1.1.22-r4 \
-    perl=5.28.3-r0 \
-    pixman=0.38.4-r0 \
-    wget=1.20.3-r0 \
-    xz=5.2.4-r0 \
-    zlib=1.2.11-r1
+    bash=5.2.15-r5 \
+    cairo=1.17.8-r1 \
+    icu-libs=73.2-r1 \
+    libgcc=12.2.1_git20220924-r10 \
+    libpaper=2.1.1-r0 \
+    libpng=1.6.39-r3 \
+    libstdc++=12.2.1_git20220924-r10 \
+    libx11=1.8.4-r4 \
+    musl=1.2.4-r0 \
+    perl=5.36.1-r2 \
+    pixman=0.42.2-r1 \
+    wget=1.21.4-r0 \
+    xz=5.4.3-r0 \
+    zlib=1.2.13-r1
 
 RUN wget mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz \
  && tar -xzf install-tl-unx.tar.gz \
