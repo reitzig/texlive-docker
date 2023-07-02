@@ -14,7 +14,7 @@ jobs:
     name: Make Release Tag
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Obtain Installer
         run: .github/scripts/build-installer-image.sh
       - name: Determine TeXlive Version
