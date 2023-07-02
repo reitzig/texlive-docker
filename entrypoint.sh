@@ -79,7 +79,8 @@ case "${command}" in
                 fi
                 ;;
             *)
-                work_command="${2}"
+                shift
+                work_command="$@"
 
                 if [[ -f "${SRC_DIR}/${BUILDSCRIPT}" ]]; then
                     echo "Work command overrides build script ${BUILDSCRIPT}."
