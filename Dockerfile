@@ -5,7 +5,7 @@ ENV BASH_VERSION="5.2.15-r5"
 # renovate: datasource=repology depName=alpine_3_18/cairo versioning=loose
 ENV CAIRO_VERSION="1.17.8-r1"
 # renovate: datasource=repology depName=alpine_3_18/icu versioning=loose
-ENV ICU_LIBS_VERSION="73.2-r1"
+ENV ICU_LIBS_VERSION="73.2-r2"
 # renovate: datasource=repology depName=alpine_3_18/gcc versioning=loose
 ENV LIBGCC_VERSION="12.2.1_git20220924-r10"
 # renovate: datasource=repology depName=alpine_3_18/libpaper versioning=loose
@@ -17,7 +17,7 @@ ENV LIBSTDCPP_VERSION="12.2.1_git20220924-r10"
 # renovate: datasource=repology depName=alpine_3_18/libx11 versioning=loose
 ENV LIBX11_VERSION="1.8.4-r4"
 # renovate: datasource=repology depName=alpine_3_18/musl versioning=loose
-ENV MUSL_VERSION="1.2.4-r0"
+ENV MUSL_VERSION="1.2.4-r1"
 # renovate: datasource=repology depName=alpine_3_18/perl versioning=loose
 ENV PERL_VERSION="5.36.1-r2"
 # renovate: datasource=repology depName=alpine_3_18/pixman versioning=loose
