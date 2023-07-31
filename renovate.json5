@@ -13,8 +13,10 @@
         {
             "matchFiles": ["Dockerfile"],
             "schedule": [
-                "* 15 28 * *",  // just before our monthly test run, cf. test-and-publish.yml
-                "* 5 1 * *"     // just before our monthly release, cf. trigger-release.yml
+                // Update dependencies in time for test run and release:
+                // (compare schedules in test-and-publish.yml and trigger-release.yml)
+                "* * 28-31 * *",
+                "* 0-5 1 * *",
             ],
             "automerge": "true",
             "groupName": "base image",
