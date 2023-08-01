@@ -6,6 +6,7 @@ installer_image=${TEXLIVE_INSTALLER_IMAGE:-'texlive-installer:latest'}
 
 # Get the TeXlive installer and extract the major version
 tlversion="$(docker run --rm "${installer_image}" | head -n 1 | awk '{ print $5 }')"
+echo "Determined TeXlive version: ${tlversion}"
 
 # Check if this version was released before
 set -o pipefail
@@ -13,12 +14,14 @@ last_minor_version="$(git tag | grep "release-${tlversion}." | sed -e "s/release
 
 # shellcheck disable=SC2181 # we need the output
 if [[ $? -eq 0 ]]; then
+    echo "Determined last minor version: ${last_minor_version}"
     # Increment "minor version"
     next_version="${tlversion}.$((last_minor_version + 1))"
 else
     # No tag for this TeXlive version yet, start over
     next_version="${tlversion}.1"
 fi
+echo "Will release version: ${next_version}"
 
 # POST a new tag via Github API
 current_commit="$(git show-ref master --hash | head -n 1)"
