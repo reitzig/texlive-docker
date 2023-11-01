@@ -1,4 +1,4 @@
-FROM alpine:3.18@sha256:82d1e9d7ed48a7523bdebc18cf6290bdb97b82302a8a9c27d4fe885949ea94d1 AS texlive-installer
+FROM alpine:3.18@sha256:eece025e432126ce23f223450a0326fbebde39cdf496a85d8c016293fc851978 AS texlive-installer
 
 # renovate: datasource=repology depName=alpine_3_18/bash versioning=loose
 ENV BASH_VERSION="5.2.15-r5"
@@ -15,11 +15,11 @@ ENV LIBPNG_VERSION="1.6.39-r3"
 # renovate: datasource=repology depName=alpine_3_18/gcc versioning=loose
 ENV LIBSTDCPP_VERSION="12.2.1_git20220924-r10"
 # renovate: datasource=repology depName=alpine_3_18/libx11 versioning=loose
-ENV LIBX11_VERSION="1.8.4-r4"
+ENV LIBX11_VERSION="1.8.7-r0"
 # renovate: datasource=repology depName=alpine_3_18/musl versioning=loose
-ENV MUSL_VERSION="1.2.4-r1"
+ENV MUSL_VERSION="1.2.4-r2"
 # renovate: datasource=repology depName=alpine_3_18/perl versioning=loose
-ENV PERL_VERSION="5.36.1-r2"
+ENV PERL_VERSION="5.36.2-r0"
 # renovate: datasource=repology depName=alpine_3_18/pixman versioning=loose
 ENV PIXMAN_VERSION="0.42.2-r1"
 # renovate: datasource=repology depName=alpine_3_18/wget versioning=loose
