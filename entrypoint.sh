@@ -90,6 +90,7 @@ case "${command}" in
 
         # Install dependencies
         hashfile="${TMP_DIR}/${TEXLIVEFILE}.sha"
+        mkdir -p $(dirname ${hashfile})
         if [[ -f "${SRC_DIR}/${TEXLIVEFILE}" ]]; then
             if ! sha256sum -c "${hashfile}" > /dev/null 2>&1; then
                 echo "Installing dependencies ..."
