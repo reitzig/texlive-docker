@@ -4,13 +4,13 @@ on:
     - cron: '0 16 28 * *'
     # Verify that (most) things work before running the monthly release.
   push:
-    branches-ignore:
-      - 'wip-*'
+    branches:
+      - 'master'
     paths-ignore:
       - '**.md'
       - 'LICENSE'
       - 'demo/**'
-  create:
+  pull_request:
   workflow_dispatch:
 
 env:
