@@ -11,6 +11,7 @@ on:
       - 'LICENSE'
       - 'demo/**'
   pull_request:
+  create:
   workflow_dispatch:
 
 env:
