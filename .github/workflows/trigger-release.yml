@@ -24,3 +24,12 @@ jobs:
           # Note: use "real" access token so workflow trigger isn't suppressed
           #       cf https://github.community/t5/GitHub-Actions/Tag-created-by-API-does-not-trigger-create/m-p/36686/highlight/true#M2653
   # --> will trigger `test-and-publish.yml` with a `create` event
+
+  keepalive:
+    name: Keepalive
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/keepalive-workflow@v2

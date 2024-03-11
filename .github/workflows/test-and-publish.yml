@@ -108,3 +108,12 @@ jobs:
         run: |
           .github/scripts/update-github-release.sh \
             "${{ steps.create-gh-release.outputs.id }}"
+
+  keepalive:
+    name: Keepalive
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/keepalive-workflow@v2

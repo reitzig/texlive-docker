@@ -33,3 +33,12 @@ jobs:
             p=$(basename ${p})
             .github/scripts/update-dockerhub-info.sh ${p%.profile}
           done
+
+  keepalive:
+    name: Keepalive
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/keepalive-workflow@v2
