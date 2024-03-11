@@ -19,16 +19,6 @@ env:
   DOCKERHUB_USER_NAME: "reitzig"
 
 jobs:
-  diagnostics:
-    name: Log Workflow Information
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: "Git Revision"
-        run: echo "${GITHUB_REF}"
-      - name: "Github Event"
-        run: echo -e '${{ toJSON(github.event) }}'
-
   test-create-minimal:
     name: "Test: Create Minimal Image"
     runs-on: ubuntu-latest
