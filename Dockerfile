@@ -44,7 +44,10 @@ RUN apk --no-cache add \
     xz=${XZ_VERSION} \
     zlib=${ZLIB_VERSION}
 
-RUN wget mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz \
+ARG ctan_mirror="https://mirrors.ctan.org"
+ENV CTAN_MIRROR=$ctan_mirror
+
+RUN wget "${CTAN_MIRROR}/systems/texlive/tlnet/install-tl-unx.tar.gz" \
  && tar -xzf install-tl-unx.tar.gz \
  && rm install-tl-unx.tar.gz \
  && mv install-tl-* install-tl
@@ -66,14 +69,20 @@ RUN tlversion=$(cat install-tl/release-texlive.txt | head -n 1 | awk '{ print $5
  && ln -s /usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl /usr/local/texlive/${tlversion}/bin/x86_64-linux \
  && ln -s /usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl/mktexlsr /usr/local/bin/mktexlsr
 
+ARG ctan_mirror="https://mirrors.ctan.org"
+ENV CTAN_MIRROR=$ctan_mirror
+
 RUN (  cd install-tl \
     && tlversion=$(cat release-texlive.txt | head -n 1 | awk '{ print $5 }') \
     && sed -i "s/\${tlversion}/${tlversion}/g" ${profile}.profile \
-    && ./install-tl -profile ${profile}.profile \
+    && ./install-tl -repository="${CTAN_MIRROR}/systems/texlive/tlnet" -profile ${profile}.profile \
  ) \
  && rm -rf install-tl \
  && tlmgr version | tail -n 1 > version \
  && echo "Installed on $(date)" >> version
+ # && tlmgr option repository "${CTAN_MIRROR}"
+ # TODO: Determine if this is necessary -- shouldn't be, and
+ #       we don't want to hammer the same mirror whenever the image is used!
 
 ARG src_dir="/work/src"
 ARG tmp_dir="/work/tmp"
