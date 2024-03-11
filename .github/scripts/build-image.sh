@@ -7,6 +7,10 @@ set -eu
 installer_image=${TEXLIVE_INSTALLER_IMAGE:-'texlive-installer:latest'}
 image_tag_list="${IMAGE_TAG_LIST:-/dev/stdout}"
 
+# NB: Can't seem to resolve mirrors.ctan.org from within 'docker build', so do it here:
+ctan_mirror="$(curl -Ls -o /dev/null -w '%{url_effective}' https://mirrors.ctan.org)"
+echo "Will use CTAN mirror ${ctan_mirror}"
+
 ref="${1}"
 profile="${2:-minimal}"
 commit_time="$(date --date="@$(git show -s --format=%ct HEAD)" --rfc-3339=seconds)"
@@ -32,6 +36,7 @@ case "${ref}" in
             --cache-from "${installer_image}" \
             --tag "$(make_docker_tag "${profile}" "${version}")" \
             --tag "$(make_docker_tag "${profile}" latest)" \
+            --build-arg "ctan_mirror=${ctan_mirror}" \
             --build-arg "profile=${profile}" \
             --build-arg "label_created=${commit_time}" \
             --build-arg "label_version=${version}" \
@@ -46,6 +51,7 @@ case "${ref}" in
         docker build \
             --cache-from "${installer_image}" \
             --tag "$(make_docker_tag "${profile}" "${version}")" \
+            --build-arg "ctan_mirror=${ctan_mirror}" \
             --build-arg "profile=${profile}" \
             --build-arg "label_created=${commit_time}" \
             --build-arg "label_version=${version}" \
@@ -61,6 +67,7 @@ case "${ref}" in
         docker build \
             --cache-from "${installer_image}" \
             --tag "$(make_docker_tag "${profile}" "${version}")" \
+            --build-arg "ctan_mirror=${ctan_mirror}" \
             --build-arg "profile=${profile}" \
             .
         make_docker_tag "${profile}" "${version}" >> "${image_tag_list}"
