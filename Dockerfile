@@ -1,4 +1,4 @@
-FROM alpine:3.18@sha256:eece025e432126ce23f223450a0326fbebde39cdf496a85d8c016293fc851978 AS texlive-installer
+FROM alpine:3.19@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b AS texlive-installer
 
 # renovate: datasource=repology depName=alpine_3_18/bash versioning=loose
 ENV BASH_VERSION="5.2.15-r5"
