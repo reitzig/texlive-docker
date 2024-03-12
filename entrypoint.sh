@@ -91,12 +91,13 @@ case "${command}" in
         # Install dependencies
         hashfile="${TMP_DIR}/${TEXLIVEFILE}.sha"
         mkdir -p "$(dirname "${hashfile}")"
-        
+
         if [[ -f "${SRC_DIR}/${TEXLIVEFILE}" ]]; then
             if ! sha256sum -c "${hashfile}" > /dev/null 2>&1; then
                 echo "Installing dependencies ..."
                 tlmgr update --self
                 xargs tlmgr install < "${SRC_DIR}/${TEXLIVEFILE}"
+                tlmgr path add
                 sha256sum "${SRC_DIR}/${TEXLIVEFILE}" > "${hashfile}"
             else
                 echo "${TEXLIVEFILE} has not changed; nothing new to install."
