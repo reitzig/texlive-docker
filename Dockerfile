@@ -4,6 +4,8 @@ FROM alpine:3.19@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761
 ENV BASH_VERSION="5.2.21-r0"
 # renovate: datasource=repology depName=alpine_3_19/cairo versioning=loose
 ENV CAIRO_VERSION="1.18.0-r0"
+# renovate: datasource=repology depName=alpine_3_19/gpg versioning=loose
+ENV GPG_VERSION="2.4.4-r0"
 # renovate: datasource=repology depName=alpine_3_19/icu versioning=loose
 ENV ICU_LIBS_VERSION="74.1-r0"
 # renovate: datasource=repology depName=alpine_3_19/gcc versioning=loose
@@ -31,6 +33,7 @@ ENV ZLIB_VERSION="1.3.1-r0"
 RUN apk --no-cache add \
     bash=${BASH_VERSION} \
     cairo=${CAIRO_VERSION} \
+    gpg=${GPG_VERSION} \
     icu-libs=${ICU_LIBS_VERSION} \
     libgcc=${LIBGCC_VERSION} \
     libpaper=${LIBPAPER_VERSION} \
