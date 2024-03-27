@@ -76,7 +76,7 @@ for hints on how to backport it to older images.
 
 ⚠️ Note that most CTAN mirrors do not maintain historic versions
 (cf. [tex.SE#460132](https://tex.stackexchange.com/questions/460132/historic-tex-live-distributions-https-sftp-mirror)),
-so keep in mind that widespread use of this workaround _will_ stress those few mirrors who do.
+so keep in mind that widespread use of this workaround _will_ stress those few mirrors that do.
 We strongly recommend upgrading to the latest TeXlive version as soon as possible!
 
 <!-- TODO: provide example-->
