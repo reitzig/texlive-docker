@@ -58,6 +58,33 @@ Place a file called `Texlivefile`  with a list of required CTAN packages,
 one name per line, in the source directory.
 The container will install all packages on that list before running the work command.
 
+---
+⚠️ Images will stop working once a new version of TeXlive is released with an error like this:
+
+> tlmgr: Local TeX Live (2023) is older than remote repository (2024).
+
+If you need to keep using an older image for a little while, 
+you can override the repository by setting environment variable 
+`TEXLIVE_REPOSITORY` to a value like
+```
+https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2023/tlnet-final
+```
+This feature has available since 2024.1;
+see 
+  [reitzig/texlive-docker#18](https://github.com/reitzig/texlive-docker/issues/18)
+for hints on how to backport it to older images.
+
+⚠️ Note that most CTAN mirrors do not maintain historic versions
+(cf. [tex.SE#460132](https://tex.stackexchange.com/questions/460132/historic-tex-live-distributions-https-sftp-mirror)),
+so keep in mind that widespread use of this workaround _will_ stress those few mirrors who do.
+We strongly recommend upgrading to the latest TeXlive version as soon as possible!
+
+<!-- TODO: provide example-->
+<!-- ℹ️ That said, an alternative is to maintain custom Docker images with historic package versions;
+see [here](TODO) for an example. -->
+
+---
+
 ### Parameters
 
 You can adjust some defaults of the
