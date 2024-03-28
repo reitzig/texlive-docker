@@ -71,7 +71,7 @@ https://ftp.math.utah.edu/pub/tex/historic/systems/texlive/2023/tlnet-final
 ```
 This feature has been available since 2024.1;
 see 
-  [reitzig/texlive-docker#18](https://github.com/reitzig/texlive-docker/issues/18)
+  [reitzig/texlive-docker#18.2022953222](https://github.com/reitzig/texlive-docker/issues/18#issuecomment-2022953222)
 for hints on how to backport it to older images.
 
 ⚠️ Note that most CTAN mirrors do not maintain historic versions
