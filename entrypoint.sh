@@ -34,20 +34,23 @@ Commands:
 
 Environment Variables:
 
-    OUT_DIR         Directory for the relevant output of work commands.
-                    Default: /work/out
-    SRC_DIR         Directory with project sources. Can be read-only.
-                    Default: /work/src
-    TMP_DIR         The working directory for work commands.
-                    Default: /work/tmp
-    BUILDSCRIPT     Script in SRC_DIR that can be run by the work command.
-                    Default: build.sh
-    TEXLIVEFILE     A file in SRC_DIR that contains the TeXlive packages the
-                    project requires, one package name per line.
-                    Default: Texlivefile
-    OUTPUT          Bash glob pattern that defines the relevant output of
-                    work commands.
-                    Default: '*.pdf *.log'
+    OUT_DIR             Directory for the relevant output of work commands.
+                        Default: /work/out
+    SRC_DIR             Directory with project sources. Can be read-only.
+                        Default: /work/src
+    TMP_DIR             The working directory for work commands.
+                        Default: /work/tmp
+    BUILDSCRIPT         Script in SRC_DIR that can be run by the work command.
+                        Default: build.sh
+    TEXLIVE_REPOSITORY  Direct URL to a TeXlive repository;
+                        bypasses use of mirrors.ctan.org and gives access to history versions.
+                        Default: empty (default behaviour of tlmgr)
+    TEXLIVEFILE         A file in SRC_DIR that contains the TeXlive packages the
+                        project requires, one package name per line.
+                        Default: Texlivefile
+    OUTPUT              Bash glob pattern that defines the relevant output of
+                        work commands.
+                        Default: '*.pdf *.log'
 HELP
 )"
 
@@ -94,9 +97,15 @@ case "${command}" in
 
         if [[ -f "${SRC_DIR}/${TEXLIVEFILE}" ]]; then
             if ! sha256sum -c "${hashfile}" > /dev/null 2>&1; then
+                tlrepo=""
+                if [ -n "${TEXLIVE_REPOSITORY}" ]; then
+                    echo "Will use TeXlive repository ${TEXLIVE_REPOSITORY}"
+                    tlrepo="--repository ${TEXLIVE_REPOSITORY}"
+                fi
+
                 echo "Installing dependencies ..."
-                tlmgr update --self
-                xargs tlmgr install < "${SRC_DIR}/${TEXLIVEFILE}"
+                tlmgr update ${tlrepo} --self
+                xargs tlmgr install ${tlrepo} < "${SRC_DIR}/${TEXLIVEFILE}"
                 tlmgr path add
                 sha256sum "${SRC_DIR}/${TEXLIVEFILE}" > "${hashfile}"
             else

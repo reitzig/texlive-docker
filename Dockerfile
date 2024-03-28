@@ -97,6 +97,7 @@ ENV OUT_DIR="${out_dir}"
 # Instead of VOLUME, which breaks multi-stage builds:
 RUN mkdir -p "${src_dir}" "${tmp_dir}" "${out_dir}"
 
+ENV TEXLIVE_REPOSITORY=""
 COPY entrypoint.sh /bin/entrypoint
 # Add "aliases" to align `docker run` and `docker exec` usage.
 RUN set -eo noclobber; \
