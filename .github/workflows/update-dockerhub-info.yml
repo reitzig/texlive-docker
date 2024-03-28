@@ -17,7 +17,7 @@ jobs:
       - name: "Push Info to Repos"
         env:
           DOCKERHUB_USER_NAME: "reitzig"
-          DOCKERHUB_ACCESS_TOKEN: "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}"
+          DOCKERHUB_ACCESS_TOKEN: "${{ secrets.DOCKERHUB_ACCESS_TOKEN_FULL }}"
         run: |
           for p in profiles/*; do
             p=$(basename ${p})
