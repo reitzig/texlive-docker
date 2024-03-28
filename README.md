@@ -59,7 +59,8 @@ one name per line, in the source directory.
 The container will install all packages on that list before running the work command.
 
 ---
-⚠️ Images will stop working once a new version of TeXlive is released with an error like this:
+⚠️ Installing dependencies in this way will stop working once a new version of TeXlive is released,
+with an error like this:
 
 > tlmgr: Local TeX Live (2023) is older than remote repository (2024).
 
