@@ -81,8 +81,10 @@ so keep in mind that widespread use of this workaround _will_ stress those few m
 We strongly recommend upgrading to the latest TeXlive version as soon as possible!
 
 <!-- TODO: provide example-->
-<!-- ℹ️ That said, an alternative is to maintain custom Docker images with historic package versions;
-see [here](TODO) for an example. -->
+ℹ️ That said, an alternative is to maintain custom Docker images with historic package versions<!--;
+see [here](TODO) for an example-->.
+This approach completely avoids the need for running `tlmgr` at runtime,
+so repository freeze does not impact your builds.
 
 ---
 
