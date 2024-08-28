@@ -27,7 +27,7 @@ ENV PIXMAN_VERSION="0.43.2-r0"
 # renovate: datasource=repology depName=alpine_3_20/wget versioning=loose
 ENV WGET_VERSION="1.24.5-r0"
 # renovate: datasource=repology depName=alpine_3_20/xz versioning=loose
-ENV XZ_VERSION="5.6.1-r3"
+ENV XZ_VERSION="5.6.2-r0"
 # renovate: datasource=repology depName=alpine_3_20/zlib versioning=loose
 ENV ZLIB_VERSION="1.3.1-r1"
 RUN apk --no-cache add \
