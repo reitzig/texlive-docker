@@ -1,4 +1,4 @@
-FROM alpine:3.20@sha256:0a4eaa0eecf5f8c050e5bba433f58c052be7587ee8af3e8b3910ef9ab5fbe9f5 AS texlive-installer
+FROM alpine:3.20@sha256:beefdbd8a1da6d2915566fde36db9db0b524eb737fc57cd1367effd16dc0d06d AS texlive-installer
 
 # renovate: datasource=repology depName=alpine_3_20/bash versioning=loose
 ENV BASH_VERSION="5.2.26-r0"
@@ -13,7 +13,7 @@ ENV LIBGCC_VERSION="13.2.1_git20240309-r0"
 # renovate: datasource=repology depName=alpine_3_20/libpaper versioning=loose
 ENV LIBPAPER_VERSION="2.2.5-r0"
 # renovate: datasource=repology depName=alpine_3_20/libpng versioning=loose
-ENV LIBPNG_VERSION="1.6.43-r0"
+ENV LIBPNG_VERSION="1.6.44-r0"
 # renovate: datasource=repology depName=alpine_3_20/gcc versioning=loose
 ENV LIBSTDCPP_VERSION="13.2.1_git20240309-r0"
 # renovate: datasource=repology depName=alpine_3_20/libx11 versioning=loose
