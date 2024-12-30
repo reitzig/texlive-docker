@@ -2,8 +2,8 @@
 
 All examples share the same basic task:
 
-- compile document [`hello_world.tex`] with
-- dependencies given in [`Texlivefile`].
+- compile document [`hello_world.tex`](hello_world.tex) with
+- dependencies given in [`Texlivefile`](Texlivefile).
 
 They go about it in different ways in order to showcase the flexibility
 of using TeXlive in this way -- and to _specify_ how they should work
@@ -55,7 +55,7 @@ in CI/CD jobs which, unfortunately, has made them less readable.
 
 Here are some remarks that should help.
 
-- Script [_example_setup.sh] is `source`-ed from the top of each
+- Script [_example_setup.sh](_example_setup.sh) is `source`-ed from the top of each
   script. If defines variables that are then used in the example
   scripts.
 
