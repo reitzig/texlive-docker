@@ -1,35 +1,35 @@
-FROM alpine:3.20@sha256:1e42bbe2508154c9126d48c2b8a75420c3544343bf86fd041fb7527e017a4b4a AS texlive-installer
+FROM alpine:3.21@sha256:21dc6063fd678b478f57c0e13f47560d0ea4eeba26dfc947b2a4f81f686b9f45 AS texlive-installer
 
-# renovate: datasource=repology depName=alpine_3_20/bash versioning=loose
-ENV BASH_VERSION="5.2.26-r0"
-# renovate: datasource=repology depName=alpine_3_20/cairo versioning=loose
-ENV CAIRO_VERSION="1.18.0-r0"
-# renovate: datasource=repology depName=alpine_3_20/gpg versioning=loose
-ENV GPG_VERSION="2.4.5-r0"
-# renovate: datasource=repology depName=alpine_3_20/icu versioning=loose
+# renovate: datasource=repology depName=alpine_3_21/bash versioning=loose
+ENV BASH_VERSION="5.2.37-r0"
+# renovate: datasource=repology depName=alpine_3_21/cairo versioning=loose
+ENV CAIRO_VERSION="1.18.2-r1"
+# renovate: datasource=repology depName=alpine_3_21/gpg versioning=loose
+ENV GPG_VERSION="2.4.7-r0"
+# renovate: datasource=repology depName=alpine_3_21/icu versioning=loose
 ENV ICU_LIBS_VERSION="74.2-r0"
-# renovate: datasource=repology depName=alpine_3_20/gcc versioning=loose
-ENV LIBGCC_VERSION="13.2.1_git20240309-r0"
-# renovate: datasource=repology depName=alpine_3_20/libpaper versioning=loose
+# renovate: datasource=repology depName=alpine_3_21/gcc versioning=loose
+ENV LIBGCC_VERSION="14.2.0-r4"
+# renovate: datasource=repology depName=alpine_3_21/libpaper versioning=loose
 ENV LIBPAPER_VERSION="2.2.5-r0"
-# renovate: datasource=repology depName=alpine_3_20/libpng versioning=loose
+# renovate: datasource=repology depName=alpine_3_21/libpng versioning=loose
 ENV LIBPNG_VERSION="1.6.44-r0"
-# renovate: datasource=repology depName=alpine_3_20/gcc versioning=loose
-ENV LIBSTDCPP_VERSION="13.2.1_git20240309-r0"
-# renovate: datasource=repology depName=alpine_3_20/libx11 versioning=loose
-ENV LIBX11_VERSION="1.8.9-r1"
-# renovate: datasource=repology depName=alpine_3_20/musl versioning=loose
-ENV MUSL_VERSION="1.2.5-r0"
-# renovate: datasource=repology depName=alpine_3_20/perl versioning=loose
-ENV PERL_VERSION="5.38.2-r0"
-# renovate: datasource=repology depName=alpine_3_20/pixman versioning=loose
-ENV PIXMAN_VERSION="0.43.2-r0"
-# renovate: datasource=repology depName=alpine_3_20/wget versioning=loose
-ENV WGET_VERSION="1.24.5-r0"
-# renovate: datasource=repology depName=alpine_3_20/xz versioning=loose
-ENV XZ_VERSION="5.6.2-r0"
-# renovate: datasource=repology depName=alpine_3_20/zlib versioning=loose
-ENV ZLIB_VERSION="1.3.1-r1"
+# renovate: datasource=repology depName=alpine_3_21/gcc versioning=loose
+ENV LIBSTDCPP_VERSION="14.2.0-r4"
+# renovate: datasource=repology depName=alpine_3_21/libx11 versioning=loose
+ENV LIBX11_VERSION="1.8.10-r0"
+# renovate: datasource=repology depName=alpine_3_21/musl versioning=loose
+ENV MUSL_VERSION="1.2.5-r8"
+# renovate: datasource=repology depName=alpine_3_21/perl versioning=loose
+ENV PERL_VERSION="5.40.0-r3"
+# renovate: datasource=repology depName=alpine_3_21/pixman versioning=loose
+ENV PIXMAN_VERSION="0.43.4-r1"
+# renovate: datasource=repology depName=alpine_3_21/wget versioning=loose
+ENV WGET_VERSION="1.25.0-r0"
+# renovate: datasource=repology depName=alpine_3_21/xz versioning=loose
+ENV XZ_VERSION="5.6.3-r0"
+# renovate: datasource=repology depName=alpine_3_21/zlib versioning=loose
+ENV ZLIB_VERSION="1.3.1-r2"
 RUN apk --no-cache add \
     bash=${BASH_VERSION} \
     cairo=${CAIRO_VERSION} \
