@@ -82,20 +82,32 @@ jobs:
              docker push "${tag}"
           done <"${IMAGE_TAG_LIST}"
           docker logout
+      - name: Determine version
+        id: release-version
+        run: |
+          tag="${{ github.ref }}"
+          version="${tag##*/*-}"
+          is_prerelease=false
+          title="Release ${version}"
+          if [[ "${tag}" == *"/pre-"* ]]; then
+            is_prerelease=true
+            title="Pre-${title}"
+          fi
+
+          echo "version=${version}" >> $GITHUB_OUTPUT
+          echo "is_prerelease=${is_prerelease}" >> $GITHUB_OUTPUT
+          echo "title=${title}" >> $GITHUB_OUTPUT
+      - name: Assemble release notes
+        id: release-notes
+        run: |
+          .github/scripts/assemble-release-notes.sh \
+            "${IMAGE_TAG_LIST}" \
+            > release-notes.md
       - name: Create Github release
         id: create-gh-release
-        uses: actions/create-release@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: true
-          prerelease: ${{ startsWith(github.ref, 'refs/tags/pre-') }}
-      # TODO: Compute release info before creating the release; communicate by step output
-      - name: Update Github release info
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          .github/scripts/update-github-release.sh \
-            "${{ steps.create-gh-release.outputs.id }}"
+          name: ${{ steps.release-version.outputs.title }}
+          body_path: release-notes.md
+          # TODO: mark as draft if created manually
+          prerelease: ${{ steps.release-version.outputs.is_prerelease }}
