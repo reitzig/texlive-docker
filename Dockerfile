@@ -47,7 +47,7 @@ RUN apk --no-cache add \
     xz=${XZ_VERSION} \
     zlib=${ZLIB_VERSION}
 
-ARG ctan_mirror="https://mirrors.ctan.org"
+ARG ctan_mirror="https://ctan.org/tex-archive"
 ENV CTAN_MIRROR=$ctan_mirror
 
 RUN wget "${CTAN_MIRROR}/systems/texlive/tlnet/install-tl-unx.tar.gz" \
@@ -72,13 +72,10 @@ RUN tlversion=$(cat install-tl/release-texlive.txt | head -n 1 | awk '{ print $5
  && ln -s /usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl /usr/local/texlive/${tlversion}/bin/x86_64-linux \
  && ln -s /usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl/mktexlsr /usr/local/bin/mktexlsr
 
-ARG ctan_mirror="https://mirrors.ctan.org"
-ENV CTAN_MIRROR=$ctan_mirror
-
 RUN (  cd install-tl \
     && tlversion=$(cat release-texlive.txt | head -n 1 | awk '{ print $5 }') \
     && sed -i "s/\${tlversion}/${tlversion}/g" ${profile}.profile \
-    && ./install-tl -repository="${CTAN_MIRROR}/systems/texlive/tlnet" -profile ${profile}.profile \
+    && ./install-tl --repository="${CTAN_MIRROR}/systems/texlive/tlnet" -profile ${profile}.profile \
  ) \
  && rm -rf install-tl \
  && tlmgr version | tail -n 1 > version \
