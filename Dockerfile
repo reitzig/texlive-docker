@@ -1,4 +1,4 @@
-FROM alpine:3.21@sha256:21dc6063fd678b478f57c0e13f47560d0ea4eeba26dfc947b2a4f81f686b9f45 AS texlive-installer
+FROM alpine:3.21@sha256:56fa17d2a7e7f168a043a2712e63aed1f8543aeafdcee47c58dcffe38ed51099 AS texlive-installer
 
 # renovate: datasource=repology depName=alpine_3_21/bash versioning=loose
 ENV BASH_VERSION="5.2.37-r0"
@@ -21,7 +21,7 @@ ENV LIBX11_VERSION="1.8.10-r0"
 # renovate: datasource=repology depName=alpine_3_21/musl versioning=loose
 ENV MUSL_VERSION="1.2.5-r8"
 # renovate: datasource=repology depName=alpine_3_21/perl versioning=loose
-ENV PERL_VERSION="5.40.0-r3"
+ENV PERL_VERSION="5.40.1-r0"
 # renovate: datasource=repology depName=alpine_3_21/pixman versioning=loose
 ENV PIXMAN_VERSION="0.43.4-r1"
 # renovate: datasource=repology depName=alpine_3_21/wget versioning=loose
