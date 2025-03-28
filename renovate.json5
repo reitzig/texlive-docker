@@ -1,25 +1,30 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-        "config:base",
-        "docker:pinDigests",
-        "regexManagers:dockerfileVersions",
+    $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+    extends: [
+        'config:recommended',
+        'docker:pinDigests',
+        'customManagers:dockerfileVersions',
     ],
-    "packageRules": [
+    packageRules: [
         {
-            "matchPaths": ["demo/**", "examples/**"],
-            "enabled": false,
+            matchFileNames: [
+                'demo/**',
+                'examples/**',
+            ],
+            enabled: false,
         },
         {
-            "matchFiles": ["Dockerfile"],
-            "schedule": [
+            matchFileNames: [
+                'Dockerfile',
+            ],
+            schedule: [
                 // Update dependencies in time for test run and release:
                 // (compare schedules in test-and-publish.yml and trigger-release.yml)
-                "* * 28-31 * *",
-                "* 0-5 1 * *",
+                '* * 28-31 * *',
+                '* 0-5 1 * *',
             ],
-            "automerge": "true",
-            "groupName": "base image",
+            automerge: true,
+            groupName: 'base image',
         },
     ],
 }
