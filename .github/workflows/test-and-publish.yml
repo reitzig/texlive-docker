@@ -20,6 +20,13 @@ env:
   DOCKERHUB_USER_NAME: "reitzig"
 
 jobs:
+  lint-docker:
+    name: "Lint: Dockerfile"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hadolint/hadolint-action@v3.1.0
+
   test-create-minimal:
     name: "Test: Create Minimal Image"
     runs-on: ubuntu-latest

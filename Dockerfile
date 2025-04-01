@@ -1,5 +1,7 @@
 FROM alpine:3.21@sha256:a8560b36e8b8210634f77d9f7f9efd7ffa463e380b75e2e74aff4511df3ef88c AS texlive-installer
 
+SHELL ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
+
 # renovate: datasource=repology depName=alpine_3_21/bash versioning=loose
 ENV BASH_VERSION="5.2.37-r0"
 # renovate: datasource=repology depName=alpine_3_21/cairo versioning=loose
@@ -50,12 +52,12 @@ RUN apk --no-cache add \
 ARG ctan_mirror="https://mirrors.ctan.org"
 ENV CTAN_MIRROR=$ctan_mirror
 
-RUN wget "${CTAN_MIRROR}/systems/texlive/tlnet/install-tl-unx.tar.gz" \
+RUN wget --quiet "${CTAN_MIRROR}/systems/texlive/tlnet/install-tl-unx.tar.gz" \
  && tar -xzf install-tl-unx.tar.gz \
  && rm install-tl-unx.tar.gz \
  && mv install-tl-* install-tl
 
-ENTRYPOINT cat install-tl/release-texlive.txt
+ENTRYPOINT ["cat", "install-tl/release-texlive.txt"]
     # Only used in `make-release-tag.sh`, overwritten for final image below
 
 # # # # # # # # # # # # # # #
@@ -63,22 +65,25 @@ ENTRYPOINT cat install-tl/release-texlive.txt
 #  cf. build-image.sh
 FROM texlive-installer AS texlive
 
+SHELL ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
+
 ARG profile=minimal
 COPY "profiles/${profile}.profile" /install-tl/${profile}.profile
 
 # Workaround: installer doesn't seem to handle linuxmusl(-only) install correctly
-RUN tlversion=$(cat install-tl/release-texlive.txt | head -n 1 | awk '{ print $5 }') \
- && mkdir -p /usr/local/texlive/${tlversion}/bin \
- && ln -s /usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl /usr/local/texlive/${tlversion}/bin/x86_64-linux \
- && ln -s /usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl/mktexlsr /usr/local/bin/mktexlsr
+RUN tlversion="$(head -n 1 install-tl/release-texlive.txt | awk '{ print $5 }')" \
+ && mkdir -p "/usr/local/texlive/${tlversion}/bin" \
+ && ln -s "/usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl" "/usr/local/texlive/${tlversion}/bin/x86_64-linux" \
+ && ln -s "usr/local/texlive/${tlversion}/bin/x86_64-linuxmusl/mktexlsr" "/usr/local/bin/mktexlsr"
 
 ARG ctan_mirror="https://mirrors.ctan.org"
 ENV CTAN_MIRROR=$ctan_mirror
 
+# hadolint ignore=DL3003
 RUN (  cd install-tl \
-    && tlversion=$(cat release-texlive.txt | head -n 1 | awk '{ print $5 }') \
-    && sed -i "s/\${tlversion}/${tlversion}/g" ${profile}.profile \
-    && ./install-tl -repository="${CTAN_MIRROR}/systems/texlive/tlnet" -profile ${profile}.profile \
+    && tlversion="$(head -n 1 release-texlive.txt | awk '{ print $5 }')" \
+    && sed -i "s/\${tlversion}/${tlversion}/g" "${profile}.profile" \
+    && ./install-tl -repository="${CTAN_MIRROR}/systems/texlive/tlnet" -profile "${profile}.profile" \
  ) \
  && rm -rf install-tl \
  && tlmgr version | tail -n 1 > version \
