@@ -1,0 +1,7 @@
+failure-threshold: warning
+override:
+  info:
+    # false positives; not an issue with modern busybox
+    # cf. https://github.com/hadolint/hadolint/issues/1084
+    - SC3037
+    - DL4006
