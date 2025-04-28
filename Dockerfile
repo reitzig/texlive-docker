@@ -23,13 +23,13 @@ ENV LIBX11_VERSION="1.8.10-r0"
 # renovate: datasource=repology depName=alpine_3_21/musl versioning=loose
 ENV MUSL_VERSION="1.2.5-r9"
 # renovate: datasource=repology depName=alpine_3_21/perl versioning=loose
-ENV PERL_VERSION="5.40.1-r0"
+ENV PERL_VERSION="5.40.1-r1"
 # renovate: datasource=repology depName=alpine_3_21/pixman versioning=loose
 ENV PIXMAN_VERSION="0.43.4-r1"
 # renovate: datasource=repology depName=alpine_3_21/wget versioning=loose
 ENV WGET_VERSION="1.25.0-r0"
 # renovate: datasource=repology depName=alpine_3_21/xz versioning=loose
-ENV XZ_VERSION="5.6.3-r0"
+ENV XZ_VERSION="5.6.3-r1"
 # renovate: datasource=repology depName=alpine_3_21/zlib versioning=loose
 ENV ZLIB_VERSION="1.3.1-r2"
 RUN apk --no-cache add \
