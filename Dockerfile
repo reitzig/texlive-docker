@@ -1,4 +1,4 @@
-FROM alpine:3.22@sha256:8a1f59ffb675680d47db6337b49d22281a139e9d709335b492be023728e11715 AS texlive-installer
+FROM alpine:3.22@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1 AS texlive-installer
 
 SHELL ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
 
@@ -9,7 +9,7 @@ ENV CAIRO_VERSION="1.18.4-r0"
 # renovate: datasource=repology depName=alpine_3_22/gpg versioning=loose
 ENV GPG_VERSION="2.4.7-r0"
 # renovate: datasource=repology depName=alpine_3_22/icu versioning=loose
-ENV ICU_LIBS_VERSION="76.1-r0"
+ENV ICU_LIBS_VERSION="76.1-r1"
 # renovate: datasource=repology depName=alpine_3_22/gcc versioning=loose
 ENV LIBGCC_VERSION="14.2.0-r6"
 # renovate: datasource=repology depName=alpine_3_22/libpaper versioning=loose
@@ -25,7 +25,7 @@ ENV MUSL_VERSION="1.2.5-r10"
 # renovate: datasource=repology depName=alpine_3_22/perl versioning=loose
 ENV PERL_VERSION="5.40.2-r0"
 # renovate: datasource=repology depName=alpine_3_22/pixman versioning=loose
-ENV PIXMAN_VERSION="0.46.0-r0"
+ENV PIXMAN_VERSION="0.46.4-r0"
 # renovate: datasource=repology depName=alpine_3_22/wget versioning=loose
 ENV WGET_VERSION="1.25.0-r1"
 # renovate: datasource=repology depName=alpine_3_22/xz versioning=loose
