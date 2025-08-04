@@ -23,7 +23,7 @@ ENV LIBX11_VERSION="1.8.11-r0"
 # renovate: datasource=repology depName=alpine_3_22/musl versioning=loose
 ENV MUSL_VERSION="1.2.5-r10"
 # renovate: datasource=repology depName=alpine_3_22/perl versioning=loose
-ENV PERL_VERSION="5.40.2-r0"
+ENV PERL_VERSION="5.40.3-r0"
 # renovate: datasource=repology depName=alpine_3_22/pixman versioning=loose
 ENV PIXMAN_VERSION="0.46.4-r0"
 # renovate: datasource=repology depName=alpine_3_22/wget versioning=loose
