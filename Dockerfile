@@ -15,7 +15,7 @@ ENV LIBGCC_VERSION="15.2.0-r2"
 # renovate: datasource=repology depName=alpine_3_23/libpaper versioning=loose
 ENV LIBPAPER_VERSION="2.2.6-r0"
 # renovate: datasource=repology depName=alpine_3_23/libpng versioning=loose
-ENV LIBPNG_VERSION="1.6.55-r0"
+ENV LIBPNG_VERSION="1.6.56-r0"
 # renovate: datasource=repology depName=alpine_3_23/gcc versioning=loose
 ENV LIBSTDCPP_VERSION="15.2.0-r2"
 # renovate: datasource=repology depName=alpine_3_23/libx11 versioning=loose
@@ -23,7 +23,7 @@ ENV LIBX11_VERSION="1.8.12-r1"
 # renovate: datasource=repology depName=alpine_3_23/musl versioning=loose
 ENV MUSL_VERSION="1.2.5-r21"
 # renovate: datasource=repology depName=alpine_3_23/perl versioning=loose
-ENV PERL_VERSION="5.42.0-r0"
+ENV PERL_VERSION="5.42.1-r0"
 # renovate: datasource=repology depName=alpine_3_23/pixman versioning=loose
 ENV PIXMAN_VERSION="0.46.4-r0"
 # renovate: datasource=repology depName=alpine_3_23/wget versioning=loose
@@ -31,7 +31,7 @@ ENV WGET_VERSION="1.25.0-r2"
 # renovate: datasource=repology depName=alpine_3_23/xz versioning=loose
 ENV XZ_VERSION="5.8.2-r0"
 # renovate: datasource=repology depName=alpine_3_23/zlib versioning=loose
-ENV ZLIB_VERSION="1.3.1-r2"
+ENV ZLIB_VERSION="1.3.2-r0"
 RUN apk --no-cache add \
     bash=${BASH_VERSION} \
     cairo=${CAIRO_VERSION} \
