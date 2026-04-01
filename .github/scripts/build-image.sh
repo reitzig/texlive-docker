@@ -7,8 +7,7 @@ set -eu
 installer_image=${TEXLIVE_INSTALLER_IMAGE:-'texlive-installer:latest'}
 image_tag_list="${IMAGE_TAG_LIST:-/dev/stdout}"
 
-# NB: Can't seem to resolve mirrors.ctan.org from within 'docker build', so do it here:
-ctan_mirror="$(curl -Ls -o /dev/null -w '%{url_effective}' https://mirrors.ctan.org)"
+ctan_mirror="$(choose_ctan_mirror)"
 echo "Will use CTAN mirror ${ctan_mirror}"
 
 ref="${1}"
