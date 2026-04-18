@@ -1,4 +1,4 @@
-FROM alpine:3.23@sha256:25109184c71bdad752c8312a8623239686a9a2071e8825f20acb8f2198c3f659 AS texlive-installer
+FROM alpine:3.23@sha256:5b10f432ef3da1b8d4c7eb6c487f2f5a8f096bc91145e68878dd4a5019afde11 AS texlive-installer
 
 SHELL ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
 
@@ -15,15 +15,15 @@ ENV LIBGCC_VERSION="15.2.0-r2"
 # renovate: datasource=repology depName=alpine_3_23/libpaper versioning=loose
 ENV LIBPAPER_VERSION="2.2.6-r0"
 # renovate: datasource=repology depName=alpine_3_23/libpng versioning=loose
-ENV LIBPNG_VERSION="1.6.56-r0"
+ENV LIBPNG_VERSION="1.6.57-r0"
 # renovate: datasource=repology depName=alpine_3_23/gcc versioning=loose
 ENV LIBSTDCPP_VERSION="15.2.0-r2"
 # renovate: datasource=repology depName=alpine_3_23/libx11 versioning=loose
 ENV LIBX11_VERSION="1.8.12-r1"
 # renovate: datasource=repology depName=alpine_3_23/musl versioning=loose
-ENV MUSL_VERSION="1.2.5-r21"
+ENV MUSL_VERSION="1.2.5-r23"
 # renovate: datasource=repology depName=alpine_3_23/perl versioning=loose
-ENV PERL_VERSION="5.42.1-r0"
+ENV PERL_VERSION="5.42.2-r0"
 # renovate: datasource=repology depName=alpine_3_23/pixman versioning=loose
 ENV PIXMAN_VERSION="0.46.4-r0"
 # renovate: datasource=repology depName=alpine_3_23/wget versioning=loose
