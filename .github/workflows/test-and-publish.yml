@@ -112,7 +112,7 @@ jobs:
             > release-notes.md
       - name: Create Github release
         id: create-gh-release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: ${{ steps.release-version.outputs.title }}
           body_path: release-notes.md
