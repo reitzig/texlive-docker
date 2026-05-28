@@ -15,7 +15,7 @@ ENV LIBGCC_VERSION="15.2.0-r2"
 # renovate: datasource=repology depName=alpine_3_23/libpaper versioning=loose
 ENV LIBPAPER_VERSION="2.2.6-r0"
 # renovate: datasource=repology depName=alpine_3_23/libpng versioning=loose
-ENV LIBPNG_VERSION="1.6.57-r0"
+ENV LIBPNG_VERSION="1.6.58-r1"
 # renovate: datasource=repology depName=alpine_3_23/gcc versioning=loose
 ENV LIBSTDCPP_VERSION="15.2.0-r2"
 # renovate: datasource=repology depName=alpine_3_23/libx11 versioning=loose
