@@ -133,8 +133,8 @@ LABEL org.opencontainers.image.created="${label_created}" \
       org.opencontainers.image.revision="${label_revision}" \
       org.opencontainers.image.vendor="${label_maintainer}" \
       org.opencontainers.image.licenses="Apache-2.0" \
-      # org.opencontainers.image.ref.name -- doesn't apply
       org.opencontainers.image.title="TeXlive ${label_tlversion} (${profile})"
+      # org.opencontainers.image.ref.name -- doesn't apply
       # org.opencontainers.image.description -- not much more to tell
 
 # TODO: ONBUILD to install additional packages?

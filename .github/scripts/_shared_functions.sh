@@ -27,6 +27,11 @@ mirrors_to_avoid=(
 function choose_ctan_mirror() {
     retries_left="${1:-5}"
 
+    if [[ -n ${CTAN_MIRROR} ]]; then
+        echo "${CTAN_MIRROR}"
+        return 0
+    fi
+
     # Can't seem to resolve mirrors.ctan.org from within 'docker build', so do it up front.
     # Sticking to a single mirror may also be a good idea for consistency
     ctan_mirror="$(curl -Ls -o /dev/null -w '%{url_effective}' https://mirrors.ctan.org)"

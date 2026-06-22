@@ -18,6 +18,9 @@ env:
   IMAGE_TAG_LIST: "texlive-image-tags"
   TEXLIVE_INSTALLER_IMAGE: "texlive-installer:latest"
   DOCKERHUB_USER_NAME: "reitzig"
+  # 2026-06-22 Seeing GPG signature validation errors when not setting a fixed mirror.
+  # So, for now:
+  CTAN_MIRROR: "http://ftp.fau.de/ctan"
 
 jobs:
   lint-docker:
