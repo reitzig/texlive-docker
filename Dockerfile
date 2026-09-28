@@ -1,4 +1,4 @@
-FROM alpine:3.24@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b AS texlive-installer
+FROM alpine:3.24@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6 AS texlive-installer
 
 SHELL ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
 
@@ -23,13 +23,13 @@ ENV LIBX11_VERSION="1.8.13-r0"
 # renovate: datasource=repology depName=alpine_3_24/musl versioning=loose
 ENV MUSL_VERSION="1.2.6-r2"
 # renovate: datasource=repology depName=alpine_3_24/perl versioning=loose
-ENV PERL_VERSION="5.42.2-r0"
+ENV PERL_VERSION="5.42.2-r1"
 # renovate: datasource=repology depName=alpine_3_24/pixman versioning=loose
 ENV PIXMAN_VERSION="0.46.4-r0"
 # renovate: datasource=repology depName=alpine_3_24/wget versioning=loose
 ENV WGET_VERSION="1.25.0-r3"
 # renovate: datasource=repology depName=alpine_3_24/xz versioning=loose
-ENV XZ_VERSION="5.8.3-r0"
+ENV XZ_VERSION="5.8.4-r0"
 # renovate: datasource=repology depName=alpine_3_24/zlib versioning=loose
 ENV ZLIB_VERSION="1.3.2-r0"
 RUN apk --no-cache add \
