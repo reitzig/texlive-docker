@@ -1,4 +1,4 @@
-FROM alpine:3.24@sha256:294b683cb724975bec92580e1e685676bd4b50bda910ddb8c51d4cabeaec77e6 AS texlive-installer
+FROM alpine:3.24@sha256:71e9b7bae160ba167fa17414401b94cbcdaf3c32feeab9298bd794a2a0614c35 AS texlive-installer
 
 SHELL ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
 
@@ -19,9 +19,9 @@ ENV LIBPNG_VERSION="1.6.59-r0"
 # renovate: datasource=repology depName=alpine_3_24/gcc versioning=loose
 ENV LIBSTDCPP_VERSION="15.2.0-r5"
 # renovate: datasource=repology depName=alpine_3_24/libx11 versioning=loose
-ENV LIBX11_VERSION="1.8.13-r0"
+ENV LIBX11_VERSION="1.8.14-r0"
 # renovate: datasource=repology depName=alpine_3_24/musl versioning=loose
-ENV MUSL_VERSION="1.2.6-r2"
+ENV MUSL_VERSION="1.2.6-r3"
 # renovate: datasource=repology depName=alpine_3_24/perl versioning=loose
 ENV PERL_VERSION="5.42.2-r1"
 # renovate: datasource=repology depName=alpine_3_24/pixman versioning=loose
@@ -31,7 +31,7 @@ ENV WGET_VERSION="1.25.0-r3"
 # renovate: datasource=repology depName=alpine_3_24/xz versioning=loose
 ENV XZ_VERSION="5.8.4-r0"
 # renovate: datasource=repology depName=alpine_3_24/zlib versioning=loose
-ENV ZLIB_VERSION="1.3.2-r0"
+ENV ZLIB_VERSION="1.3.2-r1"
 RUN apk --no-cache add \
     bash=${BASH_VERSION} \
     cairo=${CAIRO_VERSION} \
