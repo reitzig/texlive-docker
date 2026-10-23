@@ -27,14 +27,14 @@ jobs:
     name: "Lint: Dockerfile"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: hadolint/hadolint-action@v3.5.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: hadolint/hadolint-action@06be81baf89a55ffd0e24b8f04a4185738dd3387 # v3
 
   test-create-minimal:
     name: "Test: Create Minimal Image"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Obtain Installer
         run: .github/scripts/build-installer-image.sh
         # TODO: Can the separate jobs share this image?
@@ -48,7 +48,7 @@ jobs:
     name: "Test: Run Usage Examples"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Obtain Installer
         run: .github/scripts/build-installer-image.sh
       - name: "Build Test Image"
@@ -74,7 +74,7 @@ jobs:
       - test-run-examples
     if: startsWith(github.ref, 'refs/tags/pre-') || startsWith(github.ref, 'refs/tags/release-')
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Obtain Installer
         run: .github/scripts/build-installer-image.sh
       - name: Build images
