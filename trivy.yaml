@@ -1,0 +1,20 @@
+db:
+  repository:
+    - ghcr.io/aquasecurity/trivy-db:2
+    - mirror.gcr.io/aquasec/trivy-db:2
+  java-skip-update: true # no Java here
+  skip-update: false
+
+vulnerability:
+  ignore-unfixed: false
+
+severity:
+  - CRITICAL
+  - HIGH
+  - MEDIUM
+
+scan:
+  scanners:
+    - vuln
+    - secret
+    - misconfig
