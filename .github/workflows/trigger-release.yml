@@ -6,6 +6,9 @@ on:
     types: manual-release
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   TEXLIVE_INSTALLER_IMAGE: "texlive-installer:latest"
 
@@ -19,7 +22,7 @@ jobs:
           fetch-depth: 0 # need to get the tags, cf. https://github.com/actions/checkout/issues/701
       - name: Obtain Installer
         run: .github/scripts/build-installer-image.sh
-      - name: Determine TeXlive Version
+      - name: Create Release Tag
         run: .github/scripts/make-release-tag.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_REITZIG }}

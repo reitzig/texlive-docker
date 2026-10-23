@@ -8,6 +8,9 @@ on:
       - 'LICENSE'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   update-info:
     name: Update Info

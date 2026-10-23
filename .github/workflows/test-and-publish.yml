@@ -14,6 +14,9 @@ on:
   create:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 env:
   IMAGE_TAG_LIST: "texlive-image-tags"
   TEXLIVE_INSTALLER_IMAGE: "texlive-installer:latest"
@@ -73,6 +76,8 @@ jobs:
       - test-create-minimal
       - test-run-examples
     if: startsWith(github.ref, 'refs/tags/pre-') || startsWith(github.ref, 'refs/tags/release-')
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Obtain Installer
