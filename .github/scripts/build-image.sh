@@ -57,8 +57,7 @@ case "${ref}" in
             --build-arg "label_tlversion=${tlversion}" \
             --build-arg "label_revision=$(git rev-parse --verify HEAD)" \
             .
-        # shellcheck disable=SC2086
-        make_docker_tag "${profile}" "${version}" >> ${image_tag_list}
+        make_docker_tag "${profile}" "${version}" >> "${image_tag_list}"
         ;;
     * )
         version="${ref##*/}"

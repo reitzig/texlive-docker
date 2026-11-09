@@ -83,7 +83,7 @@ case "${command}" in
                 ;;
             *)
                 shift
-                work_command="$@"
+                work_command="$*"
 
                 if [[ -f "${SRC_DIR}/${BUILDSCRIPT}" ]]; then
                     echo "Work command overrides build script ${BUILDSCRIPT}."
@@ -97,15 +97,15 @@ case "${command}" in
 
         if [[ -f "${SRC_DIR}/${TEXLIVEFILE}" ]]; then
             if ! sha256sum -c "${hashfile}" > /dev/null 2>&1; then
-                tlrepo=""
+                tlrepo=()
                 if [ -n "${TEXLIVE_REPOSITORY}" ]; then
                     echo "Will use TeXlive repository ${TEXLIVE_REPOSITORY}"
-                    tlrepo="--repository ${TEXLIVE_REPOSITORY}"
+                    tlrepo+=("--repository" "${TEXLIVE_REPOSITORY}")
                 fi
 
                 echo "Installing dependencies ..."
-                tlmgr update ${tlrepo} --self
-                xargs tlmgr install ${tlrepo} < "${SRC_DIR}/${TEXLIVEFILE}"
+                tlmgr update "${tlrepo[@]}" --self
+                xargs tlmgr install "${tlrepo[@]}" < "${SRC_DIR}/${TEXLIVEFILE}"
                 tlmgr path add
                 sha256sum "${SRC_DIR}/${TEXLIVEFILE}" > "${hashfile}"
             else
@@ -120,8 +120,10 @@ case "${command}" in
         set +e # continue even if globs don't match
         cp -rf "${SRC_DIR}"/* "${TMP_DIR}"/
         cd "${TMP_DIR}"
+        # shellcheck disable=SC2086 # TODO find better way to treat `OUTPUT` as array
         rm -f ${OUTPUT}
         bash -c "${work_command}"; work_status=$?
+        # shellcheck disable=SC2086
         cp ${OUTPUT} "${OUT_DIR}"/
 
         exit ${work_status}
