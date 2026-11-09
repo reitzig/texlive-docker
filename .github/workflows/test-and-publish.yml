@@ -155,6 +155,7 @@ jobs:
              docker push "${tag}"
           done <"${IMAGE_TAG_LIST}"
           docker logout
+      # TODO: trigger scan-latest / scan latest
       - name: Determine version
         id: release-version
         run: |
@@ -172,6 +173,8 @@ jobs:
           echo "title=${title}" >> $GITHUB_OUTPUT
       - name: Assemble release notes
         id: release-notes
+        # TODO: include actual changes
+        # TODO: include security note, if anything got fixed
         run: |
           .github/scripts/assemble-release-notes.sh \
             "${IMAGE_TAG_LIST}" \
