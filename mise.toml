@@ -1,0 +1,35 @@
+[tools]
+trivy = "latest"
+
+[vars]
+local_image = "texlive-docker:local"
+# 2026-06-22 Seeing GPG signature validation errors when not setting a fixed mirror.
+# So, for now:
+ctan_mirror = "http://ftp.fau.de/ctan"
+
+[tasks.build]
+sources = [ "Dockerfile", "entrypoint.sh", "profiles/*" ]
+outputs = { auto = true }
+usage = '''
+    arg "<profile>" default="base-luatex" {
+        choices "minimal" "base" "base-luatex"
+    }
+'''
+run = """
+  docker build \
+    -t "{{ vars.local_image }}" \
+    --build-arg "profile=${usage_profile}" \
+    --build-arg "ctan_mirror={{ vars.ctan_mirror }}" \
+    .
+"""
+
+[tasks.scan]
+sources = [ "Dockerfile", "entrypoint.sh", "profiles/*", "trivy.yaml" ]
+outputs = { auto = true }
+usage = '''
+    arg "<profile>" default="base-luatex" {
+        choices "minimal" "base" "base-luatex"
+    }
+'''
+depends = [ { task = "build", args = ["{{ usage.profile }}"] } ]
+run = "trivy image --report all --ignore-unfixed {{ vars.local_image }}"
