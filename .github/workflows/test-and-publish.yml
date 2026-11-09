@@ -182,5 +182,5 @@ jobs:
         with:
           name: ${{ steps.release-version.outputs.title }}
           body_path: release-notes.md
-          # TODO: mark as draft if created manually
+          draft: true
           prerelease: ${{ steps.release-version.outputs.is_prerelease }}
