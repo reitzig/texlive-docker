@@ -1,11 +1,26 @@
 [tools]
+hadolint = "latest"
 trivy = "latest"
+shellcheck = "latest"
 
 [vars]
 local_image = "texlive-docker:local"
 # 2026-06-22 Seeing GPG signature validation errors when not setting a fixed mirror.
 # So, for now:
 ctan_mirror = "http://ftp.fau.de/ctan"
+
+[tasks.lint-scripts]
+sources = ["**/*.sh"]
+outputs = { auto = true }
+run = "shellcheck **/*.sh"
+
+[tasks.lint-dockerfile]
+sources = ["Dockerfile"]
+outputs = { auto = true }
+run = "hadolint Dockerfile"
+
+[tasks.lint]
+depends = ["lint-scripts", "lint-dockerfile"]
 
 [tasks.build]
 sources = [ "Dockerfile", "entrypoint.sh", "profiles/*" ]
