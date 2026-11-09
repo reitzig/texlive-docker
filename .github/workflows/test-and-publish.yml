@@ -41,33 +41,91 @@ jobs:
       - name: Obtain Installer
         run: .github/scripts/build-installer-image.sh
         # TODO: Can the separate jobs share this image?
-        # TODO: build daily? and push to Github registry? (--> catch APK upgrades)
+        # TODO: build daily? and push to GitHub registry? (--> catch APK upgrades)
       - name: "Build Test Image"
         run: .github/scripts/build-image.sh ${GITHUB_REF} minimal
       - name: "Test: Print version"
         run: docker run --rm $(head -n 1 "${IMAGE_TAG_LIST}") version
 
-  test-run-examples:
-    name: "Test: Run Usage Examples"
+  build-test-image:
+    name: "Build Test Image"
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.echo.outputs.tag }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       - name: Obtain Installer
         run: .github/scripts/build-installer-image.sh
       - name: "Build Test Image"
         run: .github/scripts/build-image.sh ${GITHUB_REF} base-luatex
-      - name: "Test: One-off build"
-        run: .github/scripts/run-example.sh $(head -n 1 "${IMAGE_TAG_LIST}") one-off-build
-      - name: "Test: Repeated build"
-        run: .github/scripts/run-example.sh $(head -n 1 "${IMAGE_TAG_LIST}") repeated-build
-      - name: "Test: Complex build"
-        run: .github/scripts/run-example.sh $(head -n 1 "${IMAGE_TAG_LIST}") complex-build
-      - name: "Test: Interactive build"
-        run: .github/scripts/run-example.sh $(head -n 1 "${IMAGE_TAG_LIST}") interactive-build
-      - name: "Test: Custom Image"
-        run: .github/scripts/run-example.sh $(head -n 1 "${IMAGE_TAG_LIST}") custom-image
-        # TODO: Can we repeat the same step for different inputs?
-        # TODO: Split into separate jobs so they can be run in parallel?
+        # TODO: better version than "merge" on PRs
+      # TODO: push to GHCR (and write _that_ tag to the output)
+      # TODO: aggressive cleanup policy
+      - id: echo
+        run: |
+          echo "tag=$(head -n 1 "${IMAGE_TAG_LIST}")" >> "$GITHUB_OUTPUT"
+
+  scan-image:
+    name: "Scan Test Image"
+    needs:
+      - build-test-image
+    runs-on: ubuntu-latest
+#    permissions:
+#      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Run Trivy and output SARIF
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          trivy-config: 'trivy.yaml'
+          hide-progress: true
+          image-ref: "${{ needs.build-test-image.outputs.tag }}"
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          github-pat: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Print scan result
+        run: |
+          jq < trivy-sarif.json \
+            '.runs.[].tool.driver.rules | map({ id: .id, description: .shortDescription.text, severity: .properties."security-severity" }) | sort_by(.severity) | reverse' \
+            > trivy-summary.json
+          jq trivy-summary.json
+
+          echo -e "# Trivy Scan Summary\n\n| ID | Severity | Description |\n| --- | --- | --- |" >> $GITHUB_STEP_SUMMARY
+          jq -r < trivy-summary.json \
+            '. | map("| " + .id + " | " + .severity + " | " + .description + " |") | .[]'
+            >> $GITHUB_STEP_SUMMARY
+
+      # TODO: Does this overwrite Advisories or comment on the PR? (we want the latter)
+      - name: Upload Trivy scan results to GitHub Security
+        uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4
+        if: 'always()'
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+  test-run-examples:
+    name: "Test: Run Usage Examples"
+    needs:
+      - build-test-image
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        test-case:
+          - name: "Test: One-off build"
+            id: one-off-build
+          - name: "Test: Repeated build"
+            id: repeated-build
+          - name: "Test: Complex build"
+            id: complex-build
+          - name: "Test: Interactive build"
+            id: interactive-build
+          - name: "Test: Custom Image"
+            id: custom-image
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - name: ${{ matrix.test-case.name }}
+        run: .github/scripts/run-example.sh "${{ needs.build-test-image.outputs.tag }}" ${{ matrix.test-case.id }}
 
   publish-release:
     name: Publish Images
@@ -97,6 +155,7 @@ jobs:
              docker push "${tag}"
           done <"${IMAGE_TAG_LIST}"
           docker logout
+      # TODO: trigger scan-latest / scan latest
       - name: Determine version
         id: release-version
         run: |
@@ -114,6 +173,8 @@ jobs:
           echo "title=${title}" >> $GITHUB_OUTPUT
       - name: Assemble release notes
         id: release-notes
+        # TODO: include actual changes
+        # TODO: include security note, if anything got fixed
         run: |
           .github/scripts/assemble-release-notes.sh \
             "${IMAGE_TAG_LIST}" \
@@ -124,5 +185,5 @@ jobs:
         with:
           name: ${{ steps.release-version.outputs.title }}
           body_path: release-notes.md
-          # TODO: mark as draft if created manually
+          draft: true
           prerelease: ${{ steps.release-version.outputs.is_prerelease }}
