@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-source "$(dirname $0)/_example_setup.sh" "${@}"
+set -euo pipefail
+
+# shellcheck source=examples/_example_setup.sh
+source "$(dirname "$0")/_example_setup.sh" "${@}"
 
 # This is the most flexible approach:
 #
@@ -13,7 +16,7 @@ source "$(dirname $0)/_example_setup.sh" "${@}"
 
 # Start the container: it will not run any command yet!
 docker run --name=tld-example --detach --rm \
-    ${image} hold
+    "${image}" hold
 
 docker cp . tld-example:/work/src/ # You could also use a bind-mount instead
 docker exec tld-example work 'lualatex hello_world.tex'
