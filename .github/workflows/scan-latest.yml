@@ -38,4 +38,6 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
+      # TODO: output result as table
+      # TODO: fail on HIGH+ CVEs to trigger email
 
