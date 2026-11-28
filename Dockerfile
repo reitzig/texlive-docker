@@ -1,4 +1,4 @@
-FROM alpine:3.24@sha256:be2656061b536c1883c4034790e21d0a09c5aaaf51968b89368a3c0371ea2c9a AS texlive-installer
+FROM alpine:3.24@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf AS texlive-installer
 
 SHELL ["/bin/sh", "-e", "-u", "-o", "pipefail", "-c"]
 
@@ -31,7 +31,7 @@ ENV WGET_VERSION="1.25.0-r3"
 # renovate: datasource=repology depName=alpine_3_24/xz versioning=loose
 ENV XZ_VERSION="5.8.4-r0"
 # renovate: datasource=repology depName=alpine_3_24/zlib versioning=loose
-ENV ZLIB_VERSION="1.3.2-r1"
+ENV ZLIB_VERSION="1.4-r0"
 RUN apk --no-cache add \
     bash=${BASH_VERSION} \
     cairo=${CAIRO_VERSION} \
